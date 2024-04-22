@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: 'postgres:alpine3.19'
+    container_name: 'postgres-db'
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        delay: 10s
+        window: 20s
+    env_file:
+      - ../src/main/resources/env/dev-db-conf.env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+      - sport-db-data:/var/lib/postgresql/data
+    ports:
+      - '9932:5432'
+    profiles:
+      - develop
+    networks:
+      backend:
+
+networks:
+  backend:
+    name: sport-backend-network
+    driver: bridge
+
+volumes:
+  sport-db-data:

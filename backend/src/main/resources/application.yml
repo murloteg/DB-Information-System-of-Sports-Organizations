@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: backend
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  liquibase:
+    enabled: false
+  docker:
+    compose:
+      file: backend/deploy/docker-compose.yaml
+      profiles:
+        active: develop
+      lifecycle-management: start_and_stop
+      start:
+        command: up
+      stop:
+        command: down
+        timeout: 0
+      enabled: true
+server:
+  port: 8080
