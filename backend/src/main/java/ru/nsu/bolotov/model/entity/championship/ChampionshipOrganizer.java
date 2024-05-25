@@ -23,7 +23,7 @@ public class ChampionshipOrganizer {
     @Column(name = "organizer_id")
     private long organizerId;
 
-    @Column(name = "company_name")
+    @Column(name = "company_name", unique = true)
     @NotBlank
     private String companyName;
 

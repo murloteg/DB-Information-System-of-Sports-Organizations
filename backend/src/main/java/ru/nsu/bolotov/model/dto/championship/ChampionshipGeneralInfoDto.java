@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nsu.bolotov.model.dto.facility.GeneralSportFacilityInfoDto;
+import ru.nsu.bolotov.model.dto.sport.SportTypeInfoDto;
 
 import java.time.LocalDate;
 
@@ -20,6 +21,9 @@ public class ChampionshipGeneralInfoDto {
 
     @JsonProperty(value = "end_date")
     private LocalDate endDate;
+
+    @JsonProperty(value = "sport_type")
+    private SportTypeInfoDto sportTypeInfoDto;
 
     @JsonProperty(value = "sport_facility")
     private GeneralSportFacilityInfoDto sportFacilityInfoDto;

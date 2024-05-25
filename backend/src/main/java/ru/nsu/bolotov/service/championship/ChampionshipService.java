@@ -7,13 +7,16 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.championship.ChampionshipOrganizersRepository;
 import ru.nsu.bolotov.dao.championship.ChampionshipRepository;
 import ru.nsu.bolotov.dao.facility.SportFacilityRepository;
+import ru.nsu.bolotov.dao.sport.SportTypeRepository;
 import ru.nsu.bolotov.model.dto.championship.*;
 import ru.nsu.bolotov.model.entity.championship.Championship;
 import ru.nsu.bolotov.model.entity.championship.ChampionshipOrganizer;
 import ru.nsu.bolotov.model.entity.facility.SportFacility;
+import ru.nsu.bolotov.model.entity.sport.SportType;
 import ru.nsu.bolotov.model.exception.championship.ChampionshipNotFoundException;
 import ru.nsu.bolotov.model.exception.championship.ChampionshipOrganizerNotFoundException;
 import ru.nsu.bolotov.model.exception.facility.SportFacilityNotFoundException;
+import ru.nsu.bolotov.model.exception.sport.SportTypeNotFoundException;
 import ru.nsu.bolotov.model.mapper.ChampionshipMapper;
 import ru.nsu.bolotov.model.mapper.ChampionshipOrganizersMapper;
 
@@ -27,6 +30,7 @@ public class ChampionshipService {
     private final ChampionshipRepository championshipRepository;
     private final ChampionshipOrganizersRepository championshipOrganizersRepository;
     private final SportFacilityRepository sportFacilityRepository;
+    private final SportTypeRepository sportTypeRepository;
     private final ChampionshipMapper championshipMapper;
     private final ChampionshipOrganizersMapper championshipOrganizersMapper;
 
@@ -35,6 +39,8 @@ public class ChampionshipService {
         log.info("Received event for championship with name: {}", championshipCreationDto.getChampionshipName());
         SportFacility sportFacility = sportFacilityRepository.findSportFacilityByFacilityId(championshipCreationDto.getSportFacilityId())
                 .orElseThrow(() -> new SportFacilityNotFoundException("Спортивное сооружение не найдено"));
+        SportType sportType = sportTypeRepository.findSportTypeBySportTypeId(championshipCreationDto.getSportTypeId())
+                .orElseThrow(() -> new SportTypeNotFoundException("Вид спорта не был найден"));
         List<ChampionshipOrganizer> organizers = new ArrayList<>();
         for (long organizerId : championshipCreationDto.getOrganizers()) {
             if (championshipOrganizersRepository.existsByOrganizerId(organizerId)) {
@@ -48,6 +54,7 @@ public class ChampionshipService {
                 championshipCreationDto.getStartDate(),
                 championshipCreationDto.getEndDate(),
                 sportFacility,
+                sportType,
                 organizers
         );
         Championship championship = championshipMapper.map(championshipValidatedCreationDto);
@@ -74,6 +81,7 @@ public class ChampionshipService {
                 championshipGeneralInfoDto.getStartDate(),
                 championshipGeneralInfoDto.getEndDate(),
                 championshipGeneralInfoDto.getSportFacilityInfoDto(),
+                championshipGeneralInfoDto.getSportTypeInfoDto(),
                 organizerInfoDtos
         );
     }
