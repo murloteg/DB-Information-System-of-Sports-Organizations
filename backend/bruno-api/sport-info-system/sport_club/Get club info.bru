@@ -1,0 +1,11 @@
+meta {
+  name: Get club info
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/sport/club/{{sportClubId}}
+  body: none
+  auth: none
+}

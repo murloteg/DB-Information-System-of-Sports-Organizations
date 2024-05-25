@@ -10,13 +10,13 @@
     <li>
         Запуск бэкенда через docker compose:
 <pre>
-docker compose -f ./backend/deploy/docker-compose.yaml up -d
+docker compose -f ./backend/deploy/docker-compose.yaml --profile develop up -d
 </pre>
     </li>
     <li>
         Остановка бэкенда через docker compose:
 <pre>
-docker compose -f ./backend/deploy/docker-compose.yaml down 
+docker compose -f ./backend/deploy/docker-compose.yaml --profile develop  down 
 </pre>
     </li>
 </ul>

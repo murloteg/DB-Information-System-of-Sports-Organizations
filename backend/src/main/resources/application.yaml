@@ -12,7 +12,7 @@ spring:
       file: backend/deploy/docker-compose.yaml
       profiles:
         active: develop
-      lifecycle-management: start_and_stop
+      lifecycle-management: start_only
       start:
         command: up
       stop:

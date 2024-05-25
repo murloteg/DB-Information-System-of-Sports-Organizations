@@ -1,0 +1,11 @@
+meta {
+  name: Get championship info
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/{{championshipId}}
+  body: none
+  auth: none
+}

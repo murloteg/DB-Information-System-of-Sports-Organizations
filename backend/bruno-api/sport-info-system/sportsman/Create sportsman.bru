@@ -1,0 +1,23 @@
+meta {
+  name: Create sportsman
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/{{apiVersion}}/sport/sportsman
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "firstName" : "Теодор",
+    "lastName" : "Паунс",
+    "age" : "17",
+    "sex" : "MALE",
+    "sport_club_id" : 1,
+    "biography": "Родился в городке, который находится на берегу Тихого Океана"
+  }
+  
+}

@@ -1,0 +1,11 @@
+meta {
+  name: Get sport court info
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/facility/court/{{sportCourtId}}
+  body: none
+  auth: none
+}
