@@ -1,0 +1,21 @@
+meta {
+  name: Create sport court
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/{{apiVersion}}/facility/court
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sport_facility": {
+      "facility_name": "Теннисный корт им. В. Филда",
+      "facility_type": "SPORT_COURT"
+    },
+    "type_of_coverage": "Жесткое покрытие"
+  }
+}

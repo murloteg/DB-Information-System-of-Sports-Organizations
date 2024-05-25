@@ -1,0 +1,29 @@
+package ru.nsu.bolotov.model.dto.championship;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import ru.nsu.bolotov.model.dto.facility.GeneralSportFacilityInfoDto;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class ChampionshipExtendedInfoDto {
+    @JsonProperty(value = "championship_name")
+    private String championshipName;
+
+    @JsonProperty(value = "start_date")
+    private LocalDate startDate;
+
+    @JsonProperty(value = "end_date")
+    private LocalDate endDate;
+
+    @JsonProperty(value = "sport_facility")
+    private GeneralSportFacilityInfoDto sportFacilityInfoDto;
+
+    private List<ChampionshipOrganizerInfoDto> organizers;
+}

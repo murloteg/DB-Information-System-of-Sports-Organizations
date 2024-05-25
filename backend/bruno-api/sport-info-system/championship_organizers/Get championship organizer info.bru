@@ -1,0 +1,19 @@
+meta {
+  name: Get championship organizer info
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/organizers/{{organizerId}}
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "company_name": "HighSport Co.",
+    "company_description": "Компания, которая каждый год устраивает соревнования по теннису"
+  }
+  
+}

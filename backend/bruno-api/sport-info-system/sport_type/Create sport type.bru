@@ -1,0 +1,18 @@
+meta {
+  name: Create sport type
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/{{apiVersion}}/sport/type
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sport_name" : "Футбол",
+    "sport_description" : "Спорт, который много веков назад был придуман в Англии"
+  }
+}

@@ -1,4 +1,4 @@
-package ru.nsu.bolotov.backend;
+package ru.nsu.bolotov;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

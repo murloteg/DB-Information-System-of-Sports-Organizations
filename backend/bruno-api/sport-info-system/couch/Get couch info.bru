@@ -1,0 +1,11 @@
+meta {
+  name: Get couch info
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/sport/couch/{{couchId}}
+  body: none
+  auth: none
+}

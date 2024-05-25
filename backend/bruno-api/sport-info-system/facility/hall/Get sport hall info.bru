@@ -1,0 +1,11 @@
+meta {
+  name: Get sport hall info
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/facility/hall/{{sportHallId}}
+  body: none
+  auth: none
+}

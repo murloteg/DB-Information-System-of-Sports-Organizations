@@ -1,0 +1,20 @@
+meta {
+  name: Create couch
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/{{apiVersion}}/sport/couch/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "firstName" : "Ричард",
+    "lastName" : "Стоулс",
+    "age" : "34",
+    "sex" : "MALE"
+  }
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Create sport club
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/{{apiVersion}}/sport/club/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "club_name": "Первый футбольный клуб",
+    "date_of_foundation": "1999-08-01"
+  }
+  
+}
