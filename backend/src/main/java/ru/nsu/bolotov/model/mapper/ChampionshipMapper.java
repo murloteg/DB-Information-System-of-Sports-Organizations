@@ -16,5 +16,8 @@ public interface ChampionshipMapper {
     @Mapping(source = "sportFacility.facilityName", target = "sportFacilityInfoDto.facilityName")
     @Mapping(source = "sportFacility.facilityType", target = "sportFacilityInfoDto.facilityType")
     @Mapping(source = "sportFacility.facilityId", target = "sportFacilityInfoDto.facilityId")
+    @Mapping(source = "sportType.sportName", target = "sportTypeInfoDto.sportName")
+    @Mapping(source = "sportType.sportDescription", target = "sportTypeInfoDto.sportDescription")
+    @Mapping(source = "sportType.sportTypeId", target = "sportTypeInfoDto.sportTypeId")
     ChampionshipGeneralInfoDto map(Championship championship);
 }

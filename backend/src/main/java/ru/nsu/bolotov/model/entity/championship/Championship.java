@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import ru.nsu.bolotov.model.entity.facility.SportFacility;
+import ru.nsu.bolotov.model.entity.sport.SportType;
 import ru.nsu.bolotov.model.entity.sport.Sportsman;
 
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class Championship {
 
     @NotBlank
     @Length(max = 100)
-    @Column(name = "championship_name")
+    @Column(name = "championship_name", unique = true)
     private String championshipName;
 
     @NotNull
@@ -61,4 +62,8 @@ public class Championship {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sport_facility_id")
     private SportFacility sportFacility;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sport_type_id")
+    private SportType sportType;
 }

@@ -33,6 +33,10 @@ public class ChampionshipCreationDto {
     @NotNull
     private long sportFacilityId;
 
+    @JsonProperty(value = "sport_type_id")
+    @NotNull
+    private long sportTypeId;
+
     @JsonDeserialize(as = ArrayList.class)
     @Size(min = 1)
     @NotNull

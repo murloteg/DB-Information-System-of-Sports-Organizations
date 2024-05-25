@@ -21,7 +21,7 @@ public class SportType {
     @Column(name = "sport_type_id")
     private long sportTypeId;
 
-    @Column(name = "sport_name")
+    @Column(name = "sport_name", unique = true)
     @Length(min = 2, max = 80)
     @NotNull
     private String sportName;

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nsu.bolotov.model.dto.facility.GeneralSportFacilityInfoDto;
+import ru.nsu.bolotov.model.dto.sport.SportTypeInfoDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +25,9 @@ public class ChampionshipExtendedInfoDto {
 
     @JsonProperty(value = "sport_facility")
     private GeneralSportFacilityInfoDto sportFacilityInfoDto;
+
+    @JsonProperty(value = "sport_type")
+    private SportTypeInfoDto sportTypeInfoDto;
 
     private List<ChampionshipOrganizerInfoDto> organizers;
 }
