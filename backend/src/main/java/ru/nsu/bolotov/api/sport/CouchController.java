@@ -6,8 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.sport.CouchCreationDto;
-import ru.nsu.bolotov.model.dto.sport.CouchInfoDto;
+import ru.nsu.bolotov.model.dto.sport.couch.CouchCreationDto;
+import ru.nsu.bolotov.model.dto.sport.couch.CouchInfoDto;
+import ru.nsu.bolotov.model.dto.sport.couch.CouchUpdateDto;
 import ru.nsu.bolotov.service.sport.CouchService;
 
 import java.util.Map;
@@ -33,5 +34,19 @@ public class CouchController {
         CouchInfoDto couchInfo = couchService.getCouchInfo(couchId);
         return ResponseEntity.ok()
                 .body(couchInfo);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteSportType(@PathVariable(name = "id") long couchId) {
+        couchService.deleteCouch(couchId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateCouch(@RequestBody @Valid CouchUpdateDto couchUpdateDto) {
+        couchService.updateCouch(couchUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
     }
 }

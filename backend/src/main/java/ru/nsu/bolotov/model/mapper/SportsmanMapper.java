@@ -1,8 +1,8 @@
 package ru.nsu.bolotov.model.mapper;
 
 import org.mapstruct.*;
-import ru.nsu.bolotov.model.dto.sport.SportsmanCreationDto;
-import ru.nsu.bolotov.model.dto.sport.SportsmanInfoDto;
+import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanCreationDto;
+import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
 import ru.nsu.bolotov.model.entity.sport.Sportsman;
 
 @Mapper(

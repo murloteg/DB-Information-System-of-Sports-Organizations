@@ -1,0 +1,22 @@
+meta {
+  name: Update total sportsman info
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/{{apiVersion}}/sport/sportsman/info
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "total_sportsman_info_id" : 1, 
+    "sportsman_id" : 1,
+    "sport_type_id" : 1,
+    "couch_id" : 1,
+    "sport_rank_level" : "SECOND_SPORTS_CATEGORY"
+  }
+  
+}

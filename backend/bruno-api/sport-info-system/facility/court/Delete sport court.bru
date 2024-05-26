@@ -1,0 +1,11 @@
+meta {
+  name: Delete sport court
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/{{apiVersion}}/facility/court/{{sportCourtId}}
+  body: none
+  auth: none
+}

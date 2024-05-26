@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
-import ru.nsu.bolotov.model.dto.sport.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubDto;
 import ru.nsu.bolotov.model.entity.sport.SportClub;
 
 @Mapper(

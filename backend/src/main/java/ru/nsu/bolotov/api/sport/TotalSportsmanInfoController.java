@@ -6,8 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.sport.TotalSportsmanInfoCreationDto;
-import ru.nsu.bolotov.model.dto.sport.TotalSportsmanInfoDto;
+import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoCreationDto;
+import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoDto;
+import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoUpdateDto;
 import ru.nsu.bolotov.service.sport.TotalSportsmanInfoService;
 
 import java.util.Map;
@@ -33,5 +34,19 @@ public class TotalSportsmanInfoController {
         TotalSportsmanInfoDto totalSportsmanInfoDto = totalSportsmanInfoService.getTotalSportsmanInfo(totalSportsmanInfoId);
         return ResponseEntity.ok()
                 .body(totalSportsmanInfoDto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteTotalSportsmanInfo(@PathVariable(name = "id") long totalSportsmanInfoId) {
+        totalSportsmanInfoService.deleteTotalSportsmanInfo(totalSportsmanInfoId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateTotalSportsmanInfo(@RequestBody @Valid TotalSportsmanInfoUpdateDto totalSportsmanInfoUpdateDto) {
+        totalSportsmanInfoService.updateTotalSportsmanInfo(totalSportsmanInfoUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
     }
 }

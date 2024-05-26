@@ -1,4 +1,4 @@
-package ru.nsu.bolotov.model.dto.sport;
+package ru.nsu.bolotov.model.dto.sport.rank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

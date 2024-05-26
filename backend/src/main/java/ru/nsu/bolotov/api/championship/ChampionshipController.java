@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.nsu.bolotov.model.dto.championship.ChampionshipCreationDto;
 import ru.nsu.bolotov.model.dto.championship.ChampionshipExtendedInfoDto;
+import ru.nsu.bolotov.model.dto.championship.ChampionshipUpdateDto;
 import ru.nsu.bolotov.service.championship.ChampionshipService;
 
 import java.util.Map;
@@ -33,5 +34,19 @@ public class ChampionshipController {
         ChampionshipExtendedInfoDto championshipInfo = championshipService.getChampionshipInfo(championshipId);
         return ResponseEntity.ok()
                 .body(championshipInfo);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteChampionship(@PathVariable(name = "id") long championshipId) {
+        championshipService.deleteChampionship(championshipId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateChampionship(@RequestBody @Valid ChampionshipUpdateDto championshipUpdateDto) {
+        championshipService.updateChampionship(championshipUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
     }
 }

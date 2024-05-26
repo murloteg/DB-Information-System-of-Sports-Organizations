@@ -1,0 +1,22 @@
+meta {
+  name: Update sport court
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/{{apiVersion}}/facility/court
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sport_facility": {
+      "facility_id" : 1,
+      "facility_name": "Теннисный корт им. В. Филда (новый)",
+      "facility_type": "SPORT_COURT"
+    },
+    "type_of_coverage": "Мягкое покрытие"
+  }
+}

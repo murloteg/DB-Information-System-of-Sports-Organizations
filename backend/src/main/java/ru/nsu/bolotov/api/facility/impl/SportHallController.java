@@ -5,8 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.facility.SportHallCreationDto;
-import ru.nsu.bolotov.model.dto.facility.SportHallInfoDto;
+import ru.nsu.bolotov.model.dto.facility.hall.SportHallCreationDto;
+import ru.nsu.bolotov.model.dto.facility.hall.SportHallInfoDto;
+import ru.nsu.bolotov.model.dto.facility.hall.SportHallUpdateDto;
 import ru.nsu.bolotov.service.facility.impl.SportHallService;
 
 import java.util.Map;
@@ -32,5 +33,19 @@ public class SportHallController {
         SportHallInfoDto facilityInfo = sportHallService.getFacilityInfo(facilityId);
         return ResponseEntity.ok()
                 .body(facilityInfo);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteSportHall(@PathVariable(name = "id") long sportHallId) {
+        sportHallService.deleteSportFacility(sportHallId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateSportHall(@RequestBody @Valid SportHallUpdateDto sportHallUpdateDto) {
+        sportHallService.updateSportFacility(sportHallUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
     }
 }

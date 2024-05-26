@@ -7,7 +7,13 @@ import ru.nsu.bolotov.dao.sport.CouchRepository;
 import ru.nsu.bolotov.dao.sport.SportTypeRepository;
 import ru.nsu.bolotov.dao.sport.SportsmanRepository;
 import ru.nsu.bolotov.dao.sport.TotalSportsmanInfoRepository;
-import ru.nsu.bolotov.model.dto.sport.*;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.couch.CouchInfoDto;
+import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
+import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoCreationDto;
+import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoDto;
+import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoUpdateDto;
+import ru.nsu.bolotov.model.dto.sport.type.SportTypeInfoDto;
 import ru.nsu.bolotov.model.entity.sport.*;
 import ru.nsu.bolotov.model.enumeration.SportRankLevel;
 import ru.nsu.bolotov.model.exception.sport.CouchNotFoundException;
@@ -65,5 +71,35 @@ public class TotalSportsmanInfoService {
                 couchInfoDto,
                 totalSportsmanInfo.getSportRankLevel().name()
         );
+    }
+
+    @Transactional
+    public void deleteTotalSportsmanInfo(long totalSportsmanInfoId) {
+        if (totalSportsmanInfoRepository.existsByTotalSportsmanInfoId(totalSportsmanInfoId)) {
+            totalSportsmanInfoRepository.deleteByTotalSportsmanInfoId(totalSportsmanInfoId);
+        } else {
+            throw new TotalSportsmanInfoNotFound("Подробная информация о спортсмене не найдена");
+        }
+    }
+
+    @Transactional
+    public void updateTotalSportsmanInfo(TotalSportsmanInfoUpdateDto totalSportsmanInfoUpdateDto) {
+        Sportsman sportsman = sportsmanRepository.findSportsmanBySportsmanId(totalSportsmanInfoUpdateDto.getSportsmanId())
+                .orElseThrow(() -> new SportsmanNotFoundException("Спортсмен не найден"));
+        SportType sportType = sportTypeRepository.findSportTypeBySportTypeId(totalSportsmanInfoUpdateDto.getSportTypeId())
+                .orElseThrow(() -> new SportTypeNotFoundException("Вид спорта не найден"));
+        Couch couch = couchRepository.findCouchByCouchId(totalSportsmanInfoUpdateDto.getCouchId())
+                .orElseThrow(() -> new CouchNotFoundException("Тренер не найден"));
+        if (totalSportsmanInfoRepository.existsByTotalSportsmanInfoId(totalSportsmanInfoUpdateDto.getTotalSportsmanInfoId())) {
+            totalSportsmanInfoRepository.updateTotalSportsmanInfoByTotalSportsmanInfoId(
+                    sportsman,
+                    sportType,
+                    couch,
+                    SportRankLevel.valueOf(totalSportsmanInfoUpdateDto.getSportRankLevel()),
+                    totalSportsmanInfoUpdateDto.getTotalSportsmanInfoId()
+            );
+        } else {
+            throw new TotalSportsmanInfoNotFound("Подробная информация о спортсмене не найдена");
+        }
     }
 }

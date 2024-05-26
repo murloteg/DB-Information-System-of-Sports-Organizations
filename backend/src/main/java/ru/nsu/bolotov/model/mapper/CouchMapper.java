@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
-import ru.nsu.bolotov.model.dto.sport.CouchCreationDto;
-import ru.nsu.bolotov.model.dto.sport.CouchInfoDto;
+import ru.nsu.bolotov.model.dto.sport.couch.CouchCreationDto;
+import ru.nsu.bolotov.model.dto.sport.couch.CouchInfoDto;
 import ru.nsu.bolotov.model.entity.sport.Couch;
 
 @Mapper(

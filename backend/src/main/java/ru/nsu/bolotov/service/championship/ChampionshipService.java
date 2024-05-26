@@ -9,6 +9,7 @@ import ru.nsu.bolotov.dao.championship.ChampionshipRepository;
 import ru.nsu.bolotov.dao.facility.SportFacilityRepository;
 import ru.nsu.bolotov.dao.sport.SportTypeRepository;
 import ru.nsu.bolotov.model.dto.championship.*;
+import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerInfoDto;
 import ru.nsu.bolotov.model.entity.championship.Championship;
 import ru.nsu.bolotov.model.entity.championship.ChampionshipOrganizer;
 import ru.nsu.bolotov.model.entity.facility.SportFacility;
@@ -43,11 +44,9 @@ public class ChampionshipService {
                 .orElseThrow(() -> new SportTypeNotFoundException("Вид спорта не был найден"));
         List<ChampionshipOrganizer> organizers = new ArrayList<>();
         for (long organizerId : championshipCreationDto.getOrganizers()) {
-            if (championshipOrganizersRepository.existsByOrganizerId(organizerId)) {
-                organizers.add(championshipOrganizersRepository.getChampionshipOrganizerByOrganizerId(organizerId));
-            } else {
-                throw new ChampionshipOrganizerNotFoundException("Организатор соревнований не был найден");
-            }
+            ChampionshipOrganizer championshipOrganizer = championshipOrganizersRepository.findChampionshipOrganizerByOrganizerId(organizerId)
+                    .orElseThrow(() -> new ChampionshipOrganizerNotFoundException("Организатор соревнований не найден"));
+            organizers.add(championshipOrganizer);
         }
         ChampionshipValidatedCreationDto championshipValidatedCreationDto = new ChampionshipValidatedCreationDto(
                 championshipCreationDto.getChampionshipName(),
@@ -84,5 +83,56 @@ public class ChampionshipService {
                 championshipGeneralInfoDto.getSportTypeInfoDto(),
                 organizerInfoDtos
         );
+    }
+
+    @Transactional
+    public void deleteChampionship(long championshipId) {
+        if (championshipRepository.existsByChampionshipId(championshipId)) {
+            championshipRepository.deleteByChampionshipId(championshipId);
+        } else {
+            throw new ChampionshipNotFoundException("Соревнование не было найдено");
+        }
+    }
+
+    @Transactional
+    public void updateChampionship(ChampionshipUpdateDto championshipUpdateDto) {
+        SportFacility sportFacility = sportFacilityRepository.findSportFacilityByFacilityId(championshipUpdateDto.getSportFacilityId())
+                .orElseThrow(() -> new SportFacilityNotFoundException("Спортивное сооружение не найдено"));
+        SportType sportType = sportTypeRepository.findSportTypeBySportTypeId(championshipUpdateDto.getSportTypeId())
+                .orElseThrow(() -> new SportTypeNotFoundException("Вид спорта не был найден"));
+        List<ChampionshipOrganizer> organizers = new ArrayList<>();
+        for (long organizerId : championshipUpdateDto.getOrganizers()) {
+            ChampionshipOrganizer championshipOrganizer = championshipOrganizersRepository.findChampionshipOrganizerByOrganizerId(organizerId)
+                    .orElseThrow(() -> new ChampionshipOrganizerNotFoundException("Организатор соревнований не найден"));
+            organizers.add(championshipOrganizer);
+        }
+        Championship championship = championshipRepository.findChampionshipByChampionshipId(championshipUpdateDto.getChampionshipId())
+                .orElseThrow(() -> new ChampionshipNotFoundException("Соревнование не было найдено"));
+        removeChampionshipFromOrganizers(organizers, championship);
+        if (championshipRepository.existsByChampionshipId(championshipUpdateDto.getChampionshipId())) {
+            championshipRepository.updateChampionshipByChampionshipId(
+                    championshipUpdateDto.getChampionshipName(),
+                    championshipUpdateDto.getStartDate(),
+                    championshipUpdateDto.getEndDate(),
+                    sportFacility,
+                    sportType,
+                    championshipUpdateDto.getChampionshipId()
+            );
+            Championship updatedChampionship = championshipRepository.findChampionshipByChampionshipId(championshipUpdateDto.getChampionshipId())
+                    .orElseThrow(() -> new ChampionshipNotFoundException("Соревнование не было найдено"));
+            for (ChampionshipOrganizer organizer : organizers) {
+                organizer.getChampionships().add(updatedChampionship);
+                championshipOrganizersRepository.save(organizer);
+            }
+        } else {
+            throw new ChampionshipNotFoundException("Соревнование не было найдено");
+        }
+    }
+
+    private void removeChampionshipFromOrganizers(List<ChampionshipOrganizer> organizers, Championship championship) {
+        for (ChampionshipOrganizer organizer : organizers) {
+            organizer.getChampionships().remove(championship);
+            championshipOrganizersRepository.save(organizer);
+        }
     }
 }

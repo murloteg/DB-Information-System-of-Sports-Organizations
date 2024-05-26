@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import ru.nsu.bolotov.model.entity.facility.SportFacility;
 import ru.nsu.bolotov.model.entity.sport.SportType;
@@ -43,6 +45,7 @@ public class Championship {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "championships")
     @EqualsAndHashCode.Exclude
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ChampionshipOrganizer> organizers = new ArrayList<>();
 
     @ManyToMany
@@ -50,6 +53,7 @@ public class Championship {
             joinColumns = {@JoinColumn(name = "championship_id")},
             inverseJoinColumns = {@JoinColumn(name = "sportsman_id")}
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Sportsman> participants = new ArrayList<>();
 
     @ManyToMany
@@ -57,13 +61,16 @@ public class Championship {
             joinColumns = {@JoinColumn(name = "championship_id")},
             inverseJoinColumns = {@JoinColumn(name = "sportsman_id")}
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Sportsman> winners = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sport_facility_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private SportFacility sportFacility;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sport_type_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private SportType sportType;
 }

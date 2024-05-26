@@ -1,0 +1,26 @@
+meta {
+  name: Update championship
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/{{apiVersion}}/championship
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "championship_id" : 1,
+    "championship_name" : "24-ый Осенний теннисный турнир",
+    "start_date" : "2024-09-01",
+    "end_date" : "2024-09-13",
+    "organizers" : [
+      1
+    ],
+    "sport_facility_id" : 1,
+    "sport_type_id" : 1
+  }
+  
+}

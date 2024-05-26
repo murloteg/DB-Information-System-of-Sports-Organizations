@@ -1,8 +1,8 @@
 package ru.nsu.bolotov.model.mapper.facility;
 
 import org.mapstruct.*;
-import ru.nsu.bolotov.model.dto.facility.SportHallCreationDto;
-import ru.nsu.bolotov.model.dto.facility.SportHallInfoDto;
+import ru.nsu.bolotov.model.dto.facility.hall.SportHallCreationDto;
+import ru.nsu.bolotov.model.dto.facility.hall.SportHallInfoDto;
 import ru.nsu.bolotov.model.entity.facility.SportHall;
 
 @Mapper(
