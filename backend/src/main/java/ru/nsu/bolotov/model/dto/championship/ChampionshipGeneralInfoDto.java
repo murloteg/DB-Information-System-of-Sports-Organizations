@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import ru.nsu.bolotov.model.dto.facility.GeneralSportFacilityInfoDto;
-import ru.nsu.bolotov.model.dto.sport.SportTypeInfoDto;
+import ru.nsu.bolotov.model.dto.sport.type.SportTypeInfoDto;
 
 import java.time.LocalDate;
 

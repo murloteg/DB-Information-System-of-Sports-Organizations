@@ -1,9 +1,12 @@
-package ru.nsu.bolotov.model.dto.sport;
+package ru.nsu.bolotov.model.dto.sport.totalinfo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
+import ru.nsu.bolotov.model.dto.sport.couch.CouchInfoDto;
+import ru.nsu.bolotov.model.dto.sport.type.SportTypeInfoDto;
 
 @Getter
 @Setter

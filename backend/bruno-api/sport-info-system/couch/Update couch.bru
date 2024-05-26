@@ -1,0 +1,22 @@
+meta {
+  name: Update couch
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/{{apiVersion}}/sport/couch/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "couch_id" : 1,
+    "firstName" : "Джейн",
+    "lastName" : "Стоулс",
+    "age" : "35",
+    "sex" : "FEMALE"
+  }
+  
+}

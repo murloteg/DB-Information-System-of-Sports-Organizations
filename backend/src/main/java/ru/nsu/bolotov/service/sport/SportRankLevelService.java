@@ -1,7 +1,7 @@
 package ru.nsu.bolotov.service.sport;
 
 import org.springframework.stereotype.Service;
-import ru.nsu.bolotov.model.dto.sport.SportRankLevelDto;
+import ru.nsu.bolotov.model.dto.sport.rank.SportRankLevelDto;
 import ru.nsu.bolotov.model.enumeration.SportRankLevel;
 
 import java.util.ArrayList;

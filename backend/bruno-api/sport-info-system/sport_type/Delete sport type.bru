@@ -1,0 +1,11 @@
+meta {
+  name: Delete sport type
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{baseUrl}}/{{apiVersion}}/sport/type/{{sportTypeId}}
+  body: none
+  auth: none
+}

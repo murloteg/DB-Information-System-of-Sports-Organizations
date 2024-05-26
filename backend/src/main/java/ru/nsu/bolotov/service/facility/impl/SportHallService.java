@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.facility.SportHallRepository;
-import ru.nsu.bolotov.model.dto.facility.SportHallCreationDto;
-import ru.nsu.bolotov.model.dto.facility.SportHallInfoDto;
+import ru.nsu.bolotov.model.dto.facility.hall.SportHallCreationDto;
+import ru.nsu.bolotov.model.dto.facility.hall.SportHallInfoDto;
+import ru.nsu.bolotov.model.dto.facility.hall.SportHallUpdateDto;
 import ru.nsu.bolotov.model.entity.facility.SportHall;
+import ru.nsu.bolotov.model.enumeration.SportFacilityType;
 import ru.nsu.bolotov.model.exception.facility.SportFacilityNotFoundException;
 import ru.nsu.bolotov.model.mapper.facility.SportHallMapper;
 
@@ -30,5 +32,28 @@ public class SportHallService {
         SportHall sportHall = sportHallRepository.findSportHallByFacilityId(facilityId)
                 .orElseThrow(() -> new SportFacilityNotFoundException("Спортивный зал не был найден"));
         return sportHallMapper.map(sportHall);
+    }
+
+    @Transactional
+    public void deleteSportFacility(long facilityId) {
+        if (sportHallRepository.existsByFacilityId(facilityId)) {
+            sportHallRepository.deleteByFacilityId(facilityId);
+        } else {
+            throw new SportFacilityNotFoundException("Спортивный зал не был найден");
+        }
+    }
+
+    @Transactional
+    public void updateSportFacility(SportHallUpdateDto sportHallUpdateDto) {
+        if (sportHallRepository.existsByFacilityId(sportHallUpdateDto.getSportFacilityUpdateDto().getFacilityId())) {
+            sportHallRepository.updateByFacilityId(
+                    sportHallUpdateDto.getSportFacilityUpdateDto().getFacilityName(),
+                    SportFacilityType.valueOf(sportHallUpdateDto.getSportFacilityUpdateDto().getFacilityType()),
+                    sportHallUpdateDto.getNumberOfSeats(),
+                    sportHallUpdateDto.getSportFacilityUpdateDto().getFacilityId()
+            );
+        } else {
+            throw new SportFacilityNotFoundException("Спортивный зал не был найден");
+        }
     }
 }

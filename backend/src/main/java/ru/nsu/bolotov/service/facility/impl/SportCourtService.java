@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.facility.SportCourtRepository;
-import ru.nsu.bolotov.model.dto.facility.SportCourtCreationDto;
-import ru.nsu.bolotov.model.dto.facility.SportCourtInfoDto;
+import ru.nsu.bolotov.model.dto.facility.court.SportCourtCreationDto;
+import ru.nsu.bolotov.model.dto.facility.court.SportCourtInfoDto;
+import ru.nsu.bolotov.model.dto.facility.court.SportCourtUpdateDto;
 import ru.nsu.bolotov.model.entity.facility.SportCourt;
+import ru.nsu.bolotov.model.enumeration.SportFacilityType;
 import ru.nsu.bolotov.model.exception.facility.SportFacilityNotFoundException;
 import ru.nsu.bolotov.model.mapper.facility.SportCourtMapper;
 
@@ -30,5 +32,28 @@ public class SportCourtService {
         SportCourt sportCourt = sportCourtRepository.findSportCourtByFacilityId(facilityId)
                 .orElseThrow(() -> new SportFacilityNotFoundException("Спортивный корт не был найден"));
         return sportCourtMapper.map(sportCourt);
+    }
+
+    @Transactional
+    public void deleteSportFacility(long facilityId) {
+        if (sportCourtRepository.existsByFacilityId(facilityId)) {
+            sportCourtRepository.deleteByFacilityId(facilityId);
+        } else {
+            throw new SportFacilityNotFoundException("Спортивный корт не был найден");
+        }
+    }
+
+    @Transactional
+    public void updateSportFacility(SportCourtUpdateDto sportCourtUpdateDto) {
+        if (sportCourtRepository.existsByFacilityId(sportCourtUpdateDto.getSportFacilityUpdateDto().getFacilityId())) {
+            sportCourtRepository.updateByFacilityId(
+                    sportCourtUpdateDto.getSportFacilityUpdateDto().getFacilityName(),
+                    SportFacilityType.valueOf(sportCourtUpdateDto.getSportFacilityUpdateDto().getFacilityType()),
+                    sportCourtUpdateDto.getTypeOfCoverage(),
+                    sportCourtUpdateDto.getSportFacilityUpdateDto().getFacilityId()
+            );
+        } else {
+            throw new SportFacilityNotFoundException("Спортивный корт не был найден");
+        }
     }
 }

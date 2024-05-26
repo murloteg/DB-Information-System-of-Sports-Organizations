@@ -6,8 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.championship.ChampionshipOrganizerCreationDto;
-import ru.nsu.bolotov.model.dto.championship.ChampionshipOrganizerInfoDto;
+import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerCreationDto;
+import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerInfoDto;
+import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerUpdateDto;
 import ru.nsu.bolotov.service.championship.ChampionshipOrganizersService;
 
 import java.util.Map;
@@ -33,5 +34,19 @@ public class ChampionshipOrganizersController {
         ChampionshipOrganizerInfoDto organizerInfo = championshipOrganizersService.getChampionshipOrganizerInfo(organizerId);
         return ResponseEntity.ok()
                 .body(organizerInfo);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteChampionshipOrganizer(@PathVariable(name = "id") long organizerId) {
+        championshipOrganizersService.deleteChampionshipOrganizer(organizerId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateChampionshipOrganizer(@RequestBody @Valid ChampionshipOrganizerUpdateDto championshipOrganizerUpdateDto) {
+        championshipOrganizersService.updateChampionshipOrganizer(championshipOrganizerUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
     }
 }

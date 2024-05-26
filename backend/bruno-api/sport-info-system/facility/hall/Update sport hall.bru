@@ -1,0 +1,23 @@
+meta {
+  name: Update sport hall
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/{{apiVersion}}/facility/hall
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sport_facility": {
+      "facility_id" : 1,
+      "facility_name": "Городской спортивный зал им. Ричарда Стоулса",
+      "facility_type": "SPORT_HALL"
+    },
+    "number_of_seats" : 20000
+  }
+  
+}

@@ -3,6 +3,8 @@ package ru.nsu.bolotov.model.entity.sport;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
@@ -31,6 +33,7 @@ public class SportClub {
     private LocalDate dateOfFoundation;
 
     @OneToMany(mappedBy = "sportClub", fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @EqualsAndHashCode.Exclude
     private List<Sportsman> clubMembers = new ArrayList<>();
 }

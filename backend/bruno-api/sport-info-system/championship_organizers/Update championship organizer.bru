@@ -1,0 +1,20 @@
+meta {
+  name: Update championship organizer
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/{{apiVersion}}/championship/organizers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "organizer_id" : 1,
+    "company_name": "HighSport Co. Limited",
+    "company_description": "Компания, которая каждый год устраивает соревнования по теннису. И не только!"
+  }
+  
+}

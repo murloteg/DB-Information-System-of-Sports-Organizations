@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 import ru.nsu.bolotov.model.entity.championship.Championship;
 import ru.nsu.bolotov.model.enumeration.SportFacilityType;
@@ -37,6 +39,7 @@ public abstract class SportFacility {
     private SportFacilityType facilityType;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sportFacility")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @EqualsAndHashCode.Exclude
     private List<Championship> championships = new ArrayList<>();
 }

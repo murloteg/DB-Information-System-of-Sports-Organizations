@@ -5,7 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.sport.SportClubRepository;
-import ru.nsu.bolotov.model.dto.sport.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubUpdateDto;
 import ru.nsu.bolotov.model.entity.sport.SportClub;
 import ru.nsu.bolotov.model.exception.sport.SportClubNotFoundException;
 import ru.nsu.bolotov.model.mapper.SportClubMapper;
@@ -29,5 +30,27 @@ public class SportClubService {
         SportClub sportClub = sportClubRepository.findSportClubByClubId(clubId)
                 .orElseThrow(() -> new SportClubNotFoundException("Клуб не найден"));
         return sportClubMapper.map(sportClub);
+    }
+
+    @Transactional
+    public void deleteSportClub(long clubId) {
+        if (sportClubRepository.existsByClubId(clubId)) {
+            sportClubRepository.deleteByClubId(clubId);
+        } else {
+            throw new SportClubNotFoundException("Клуб не найден");
+        }
+    }
+
+    @Transactional
+    public void updateSportClub(SportClubUpdateDto sportClubUpdateDto) {
+        if (sportClubRepository.existsByClubId(sportClubUpdateDto.getClubId())) {
+            sportClubRepository.updateSportClubByClubId(
+                    sportClubUpdateDto.getClubName(),
+                    sportClubUpdateDto.getDateOfFoundation(),
+                    sportClubUpdateDto.getClubId()
+            );
+        } else {
+            throw new SportClubNotFoundException("Клуб не найден");
+        }
     }
 }

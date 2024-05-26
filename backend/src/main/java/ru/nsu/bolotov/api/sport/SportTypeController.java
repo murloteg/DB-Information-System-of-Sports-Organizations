@@ -6,8 +6,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.sport.SportTypeCreationDto;
-import ru.nsu.bolotov.model.dto.sport.SportTypeInfoDto;
+import ru.nsu.bolotov.model.dto.sport.type.SportTypeCreationDto;
+import ru.nsu.bolotov.model.dto.sport.type.SportTypeInfoDto;
+import ru.nsu.bolotov.model.dto.sport.type.SportTypeUpdateDto;
 import ru.nsu.bolotov.service.sport.SportTypeService;
 
 import java.util.Map;
@@ -33,5 +34,19 @@ public class SportTypeController {
         SportTypeInfoDto sportTypeInfo = sportTypeService.getSportTypeInfo(sportTypeId);
         return ResponseEntity.ok()
                 .body(sportTypeInfo);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteSportType(@PathVariable(name = "id") long sportTypeId) {
+        sportTypeService.deleteSportType(sportTypeId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateSportType(@RequestBody @Valid SportTypeUpdateDto sportTypeUpdateDto) {
+        sportTypeService.updateSportType(sportTypeUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
     }
 }

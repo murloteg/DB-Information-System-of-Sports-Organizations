@@ -1,4 +1,4 @@
-package ru.nsu.bolotov.model.dto.sport;
+package ru.nsu.bolotov.model.dto.sport.type;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;

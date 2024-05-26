@@ -1,0 +1,20 @@
+meta {
+  name: Update sport club
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/{{apiVersion}}/sport/club/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "club_id" : 1,
+    "club_name": "Второй футбольный клуб",
+    "date_of_foundation": "1999-08-29"
+  }
+  
+}

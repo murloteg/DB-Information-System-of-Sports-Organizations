@@ -1,0 +1,11 @@
+meta {
+  name: Delete couch
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{baseUrl}}/{{apiVersion}}/sport/couch/{{couchId}}
+  body: none
+  auth: none
+}

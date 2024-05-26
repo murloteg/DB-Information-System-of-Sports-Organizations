@@ -1,0 +1,24 @@
+meta {
+  name: Update sportsman
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/{{apiVersion}}/sport/sportsman
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sportsman_id" : 1,
+    "firstName" : "Павел",
+    "lastName" : "Трейс",
+    "age" : "29",
+    "sex" : "MALE",
+    "sport_club_id" : 1,
+    "biography": "Родился в маленькой деревне"
+  }
+  
+}

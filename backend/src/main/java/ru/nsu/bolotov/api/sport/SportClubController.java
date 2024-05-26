@@ -6,7 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.sport.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubUpdateDto;
 import ru.nsu.bolotov.service.sport.SportClubService;
 
 import java.util.Map;
@@ -32,5 +33,19 @@ public class SportClubController {
         SportClubDto sportClubInfo = sportClubService.getSportClubInfo(clubId);
         return ResponseEntity.ok()
                 .body(sportClubInfo);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteSportClub(@PathVariable(name = "id") long clubId) {
+        sportClubService.deleteSportClub(clubId);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateSportClub(@RequestBody @Valid SportClubUpdateDto sportClubUpdateDto) {
+        sportClubService.updateSportClub(sportClubUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
     }
 }

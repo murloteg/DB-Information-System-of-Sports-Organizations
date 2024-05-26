@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ public class ChampionshipOrganizer {
             joinColumns = {@JoinColumn(name = "organizer_id")},
             inverseJoinColumns = {@JoinColumn(name = "championship_id")}
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @EqualsAndHashCode.Exclude
     private List<Championship> championships = new ArrayList<>();
 }

@@ -1,4 +1,4 @@
-package ru.nsu.bolotov.model.dto.sport;
+package ru.nsu.bolotov.model.dto.sport.couch;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;
@@ -13,7 +13,11 @@ import ru.nsu.bolotov.model.enumeration.Sex;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SportsmanCreationDto {
+public class CouchUpdateDto {
+    @JsonProperty(value = "couch_id")
+    @NotNull
+    private long couchId;
+
     @JsonProperty(value = "first_name")
     @NotBlank
     private String firstName;
@@ -26,11 +30,5 @@ public class SportsmanCreationDto {
     @Max(value = 105)
     private int age;
 
-    @JsonProperty(value = "sport_club_id")
-    @Min(value = 1)
-    @NotNull
-    private long sportClubId;
-
     private Sex sex;
-    private String biography;
 }
