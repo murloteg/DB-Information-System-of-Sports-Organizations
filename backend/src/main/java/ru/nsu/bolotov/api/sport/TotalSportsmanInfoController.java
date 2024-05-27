@@ -2,6 +2,7 @@ package ru.nsu.bolotov.api.sport;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoDto;
 import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoUpdateDto;
 import ru.nsu.bolotov.service.sport.TotalSportsmanInfoService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -48,5 +50,13 @@ public class TotalSportsmanInfoController {
         totalSportsmanInfoService.updateTotalSportsmanInfo(totalSportsmanInfoUpdateDto);
         return ResponseEntity.noContent()
                 .build();
+    }
+
+    @GetMapping(value = "infos")
+    public ResponseEntity<List<TotalSportsmanInfoDto>> getTotalSportsmanInfos(@RequestParam int page, @RequestParam int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<TotalSportsmanInfoDto> totalSportsmanInfos = totalSportsmanInfoService.getTotalSportsmanInfos(pageRequest);
+        return ResponseEntity.ok()
+                .body(totalSportsmanInfos);
     }
 }

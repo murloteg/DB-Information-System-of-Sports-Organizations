@@ -1,0 +1,16 @@
+meta {
+  name: Get sport courts
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/facility/court/courts?page=0&size=30
+  body: none
+  auth: none
+}
+
+query {
+  page: 0
+  size: 30
+}

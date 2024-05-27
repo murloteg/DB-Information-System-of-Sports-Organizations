@@ -2,6 +2,8 @@ package ru.nsu.bolotov.service.championship;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.championship.ChampionshipOrganizersRepository;
@@ -11,6 +13,9 @@ import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerUpda
 import ru.nsu.bolotov.model.entity.championship.ChampionshipOrganizer;
 import ru.nsu.bolotov.model.exception.championship.ChampionshipOrganizerNotFoundException;
 import ru.nsu.bolotov.model.mapper.ChampionshipOrganizersMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -53,5 +58,14 @@ public class ChampionshipOrganizersService {
         } else {
             throw new ChampionshipOrganizerNotFoundException("Организатор соревнований не найден");
         }
+    }
+
+    public List<ChampionshipOrganizerInfoDto> getOrganizers(Pageable pageable) {
+        Page<ChampionshipOrganizer> organizers = championshipOrganizersRepository.findAll(pageable);
+        List<ChampionshipOrganizerInfoDto> championshipOrganizerInfoDtos = new ArrayList<>();
+        for (ChampionshipOrganizer championshipOrganizer : organizers) {
+            championshipOrganizerInfoDtos.add(championshipOrganizersMapper.map(championshipOrganizer));
+        }
+        return championshipOrganizerInfoDtos;
     }
 }

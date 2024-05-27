@@ -1,0 +1,16 @@
+meta {
+  name: Get championships
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/championships?page=0&size=30
+  body: none
+  auth: none
+}
+
+query {
+  page: 0
+  size: 30
+}

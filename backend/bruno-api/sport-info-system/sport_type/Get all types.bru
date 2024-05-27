@@ -1,0 +1,23 @@
+meta {
+  name: Get all types
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/sport/type/types?page=0&size=30
+  body: none
+  auth: none
+}
+
+query {
+  page: 0
+  size: 30
+}
+
+body:json {
+  {
+    "sport_name" : "Футбол",
+    "sport_description" : "Спорт, который много веков назад был придуман в Англии"
+  }
+}

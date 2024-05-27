@@ -2,15 +2,15 @@ package ru.nsu.bolotov.api.championship;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.championship.ChampionshipCreationDto;
-import ru.nsu.bolotov.model.dto.championship.ChampionshipExtendedInfoDto;
-import ru.nsu.bolotov.model.dto.championship.ChampionshipUpdateDto;
+import ru.nsu.bolotov.model.dto.championship.*;
 import ru.nsu.bolotov.service.championship.ChampionshipService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -46,6 +46,28 @@ public class ChampionshipController {
     @PutMapping
     public ResponseEntity<?> updateChampionship(@RequestBody @Valid ChampionshipUpdateDto championshipUpdateDto) {
         championshipService.updateChampionship(championshipUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @GetMapping(value = "/championships")
+    public ResponseEntity<List<ChampionshipExtendedInfoDto>> getChampionships(@RequestParam int page, @RequestParam int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<ChampionshipExtendedInfoDto> championships = championshipService.getChampionships(pageRequest);
+        return ResponseEntity.ok()
+                .body(championships);
+    }
+
+    @PatchMapping(value = "/participants")
+    public ResponseEntity<?> addParticipantsToChampionship(@RequestBody @Valid ChampionshipParticipantsUpdateDto championshipParticipantsUpdateDto) {
+        championshipService.addParticipantsToChampionship(championshipParticipantsUpdateDto);
+        return ResponseEntity.noContent()
+                .build();
+    }
+
+    @PatchMapping(value = "/winners")
+    public ResponseEntity<?> addWinnersToChampionship(@RequestBody @Valid ChampionshipWinnersUpdateDto championshipWinnersUpdateDto) {
+        championshipService.addWinnersToChampionship(championshipWinnersUpdateDto);
         return ResponseEntity.noContent()
                 .build();
     }

@@ -10,11 +10,13 @@ import ru.nsu.bolotov.model.entity.sport.Sportsman;
 import ru.nsu.bolotov.model.entity.sport.TotalSportsmanInfo;
 import ru.nsu.bolotov.model.enumeration.SportRankLevel;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface TotalSportsmanInfoRepository extends JpaRepository<TotalSportsmanInfo, Long> {
     Optional<TotalSportsmanInfo> findTotalSportsmanInfoByTotalSportsmanInfoId(long totalSportsmanInfoId);
+    List<TotalSportsmanInfo> findTotalSportsmanInfoBySportsmanSportsmanId(long sportsmanId);
 
     boolean existsByTotalSportsmanInfoId(long totalSportsmanInfoId);
 

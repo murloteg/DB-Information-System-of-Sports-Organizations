@@ -1,6 +1,8 @@
 package ru.nsu.bolotov.service.sport;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.sport.SportClubRepository;
@@ -15,6 +17,9 @@ import ru.nsu.bolotov.model.exception.sport.SportClubNotFoundException;
 import ru.nsu.bolotov.model.exception.sport.SportsmanNotFoundException;
 import ru.nsu.bolotov.model.mapper.SportClubMapper;
 import ru.nsu.bolotov.model.mapper.SportsmanMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -70,5 +75,18 @@ public class SportsmanService {
         } else {
             throw new SportsmanNotFoundException("Спортсмен не найден");
         }
+    }
+
+    public List<SportsmanInfoDto> getSportsmen(Pageable pageable) {
+        Page<Sportsman> sportsmen = sportsmanRepository.findAll(pageable);
+        List<SportsmanInfoDto> sportsmanInfoDtos = new ArrayList<>();
+        for (Sportsman sportsman : sportsmen) {
+            SportClub sportClub = sportsman.getSportClub();
+            SportClubDto sportClubDto = sportClubMapper.map(sportClub);
+            SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(sportsman);
+            sportsmanInfoDto.setSportClubDto(sportClubDto);
+            sportsmanInfoDtos.add(sportsmanInfoDto);
+        }
+        return sportsmanInfoDtos;
     }
 }

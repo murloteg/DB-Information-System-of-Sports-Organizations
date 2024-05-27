@@ -2,6 +2,8 @@ package ru.nsu.bolotov.service.facility.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.facility.SportHallRepository;
@@ -12,6 +14,9 @@ import ru.nsu.bolotov.model.entity.facility.SportHall;
 import ru.nsu.bolotov.model.enumeration.SportFacilityType;
 import ru.nsu.bolotov.model.exception.facility.SportFacilityNotFoundException;
 import ru.nsu.bolotov.model.mapper.facility.SportHallMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -55,5 +60,14 @@ public class SportHallService {
         } else {
             throw new SportFacilityNotFoundException("Спортивный зал не был найден");
         }
+    }
+
+    public List<SportHallInfoDto> getHalls(Pageable pageable) {
+        Page<SportHall> sportHalls = sportHallRepository.findAll(pageable);
+        List<SportHallInfoDto> sportHallInfoDtos = new ArrayList<>();
+        for (SportHall sportHall : sportHalls) {
+            sportHallInfoDtos.add(sportHallMapper.map(sportHall));
+        }
+        return sportHallInfoDtos;
     }
 }
