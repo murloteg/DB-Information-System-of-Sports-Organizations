@@ -1,13 +1,18 @@
 meta {
-  name: Create championship organizer
+  name: Get championship organizers
   type: http
-  seq: 1
+  seq: 5
 }
 
-post {
-  url: {{baseUrl}}/{{apiVersion}}/championship/organizer
-  body: json
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/organizer/organizers?page=0&size=30
+  body: none
   auth: none
+}
+
+query {
+  page: 0
+  size: 30
 }
 
 body:json {

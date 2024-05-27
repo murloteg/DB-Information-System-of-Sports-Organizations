@@ -1,6 +1,8 @@
 package ru.nsu.bolotov.service.sport;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.sport.CouchRepository;
@@ -24,6 +26,9 @@ import ru.nsu.bolotov.model.mapper.CouchMapper;
 import ru.nsu.bolotov.model.mapper.SportClubMapper;
 import ru.nsu.bolotov.model.mapper.SportTypeMapper;
 import ru.nsu.bolotov.model.mapper.SportsmanMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +60,7 @@ public class TotalSportsmanInfoService {
         return savedTotalInfo.getTotalSportsmanInfoId();
     }
 
+    // TODO: add mapper for TotalSportsmanInfo
     public TotalSportsmanInfoDto getTotalSportsmanInfo(long totalSportsmanInfoId) {
         TotalSportsmanInfo totalSportsmanInfo = totalSportsmanInfoRepository.findTotalSportsmanInfoByTotalSportsmanInfoId(totalSportsmanInfoId)
                 .orElseThrow(() -> new TotalSportsmanInfoNotFound("Подробная информация о спортсмене не найдена"));
@@ -101,5 +107,26 @@ public class TotalSportsmanInfoService {
         } else {
             throw new TotalSportsmanInfoNotFound("Подробная информация о спортсмене не найдена");
         }
+    }
+
+    public List<TotalSportsmanInfoDto> getTotalSportsmanInfos(Pageable pageable) {
+        Page<TotalSportsmanInfo> totalSportsmanInfos = totalSportsmanInfoRepository.findAll(pageable);
+        List<TotalSportsmanInfoDto> totalSportsmanInfoDtos = new ArrayList<>();
+        for (TotalSportsmanInfo totalSportsmanInfo : totalSportsmanInfos) {
+            Sportsman sportsman = totalSportsmanInfo.getSportsman();
+            SportClub sportClub = sportsman.getSportClub();
+            SportClubDto sportClubDto = sportClubMapper.map(sportClub);
+            SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(sportsman);
+            sportsmanInfoDto.setSportClubDto(sportClubDto);
+            SportTypeInfoDto sportTypeInfoDto = sportTypeMapper.map(totalSportsmanInfo.getSportType());
+            CouchInfoDto couchInfoDto = couchMapper.map(totalSportsmanInfo.getCouch());
+            totalSportsmanInfoDtos.add(new TotalSportsmanInfoDto(
+                    sportsmanInfoDto,
+                    sportTypeInfoDto,
+                    couchInfoDto,
+                    totalSportsmanInfo.getSportRankLevel().name()
+            ));
+        }
+        return totalSportsmanInfoDtos;
     }
 }

@@ -1,0 +1,19 @@
+meta {
+  name: Add participants to championship
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{baseUrl}}/{{apiVersion}}/championship/participants
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "championship_id" : 1,
+    "participants" : [1]
+  }
+  
+}

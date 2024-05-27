@@ -2,6 +2,8 @@ package ru.nsu.bolotov.service.sport;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.sport.CouchRepository;
@@ -11,6 +13,9 @@ import ru.nsu.bolotov.model.dto.sport.couch.CouchUpdateDto;
 import ru.nsu.bolotov.model.entity.sport.Couch;
 import ru.nsu.bolotov.model.exception.sport.CouchNotFoundException;
 import ru.nsu.bolotov.model.mapper.CouchMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -55,5 +60,14 @@ public class CouchService {
         } else {
             throw new CouchNotFoundException("Тренер не найден");
         }
+    }
+
+    public List<CouchInfoDto> getCouches(Pageable pageable) {
+        Page<Couch> couches = couchRepository.findAll(pageable);
+        List<CouchInfoDto> couchInfoDtos = new ArrayList<>();
+        for (Couch couch : couches) {
+            couchInfoDtos.add(couchMapper.map(couch));
+        }
+        return couchInfoDtos;
     }
 }

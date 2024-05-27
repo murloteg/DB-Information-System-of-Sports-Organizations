@@ -1,6 +1,8 @@
 package ru.nsu.bolotov.service.sport;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.sport.SportTypeRepository;
@@ -10,6 +12,9 @@ import ru.nsu.bolotov.model.dto.sport.type.SportTypeUpdateDto;
 import ru.nsu.bolotov.model.entity.sport.SportType;
 import ru.nsu.bolotov.model.exception.sport.SportTypeNotFoundException;
 import ru.nsu.bolotov.model.mapper.SportTypeMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +55,14 @@ public class SportTypeService {
         } else {
             throw new SportTypeNotFoundException("Вид спорта не найден");
         }
+    }
+
+    public List<SportTypeInfoDto> getSportTypes(Pageable pageable) {
+        Page<SportType> sportTypes = sportTypeRepository.findAll(pageable);
+        List<SportTypeInfoDto> sportTypeInfoDtos = new ArrayList<>();
+        for (SportType sportType : sportTypes) {
+            sportTypeInfoDtos.add(sportTypeMapper.map(sportType));
+        }
+        return sportTypeInfoDtos;
     }
 }

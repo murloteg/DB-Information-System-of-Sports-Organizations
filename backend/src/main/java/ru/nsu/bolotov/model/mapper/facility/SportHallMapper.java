@@ -17,5 +17,6 @@ public interface SportHallMapper {
 
     @Mapping(source = "facilityName", target = "sportFacilityInfoDto.facilityName")
     @Mapping(source = "facilityType", target = "sportFacilityInfoDto.facilityType")
+    @Mapping(source = "facilityId", target = "sportFacilityInfoDto.facilityId")
     SportHallInfoDto map(SportHall sportHall);
 }

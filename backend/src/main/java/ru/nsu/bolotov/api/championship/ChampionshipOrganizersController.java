@@ -2,6 +2,7 @@ package ru.nsu.bolotov.api.championship;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,11 @@ import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerInfo
 import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerUpdateDto;
 import ru.nsu.bolotov.service.championship.ChampionshipOrganizersService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "api/v1/championship/organizers", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/v1/championship/organizer", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class ChampionshipOrganizersController {
     private final ChampionshipOrganizersService championshipOrganizersService;
@@ -24,7 +26,7 @@ public class ChampionshipOrganizersController {
                                                          UriComponentsBuilder uriComponentsBuilder) {
         long organizerId = championshipOrganizersService.createChampionShipOrganizer(organizerCreationDto);
         return ResponseEntity.created(uriComponentsBuilder
-                        .path("api/v1/championship/organizers/{organizerId}")
+                        .path("api/v1/championship/organizer/{organizerId}")
                         .build(Map.of("organizerId", organizerId)))
                 .build();
     }
@@ -48,5 +50,13 @@ public class ChampionshipOrganizersController {
         championshipOrganizersService.updateChampionshipOrganizer(championshipOrganizerUpdateDto);
         return ResponseEntity.noContent()
                 .build();
+    }
+
+    @GetMapping(value = "/organizers")
+    public ResponseEntity<List<ChampionshipOrganizerInfoDto>> getOrganizers(@RequestParam int page, @RequestParam int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<ChampionshipOrganizerInfoDto> organizers = championshipOrganizersService.getOrganizers(pageRequest);
+        return ResponseEntity.ok()
+                .body(organizers);
     }
 }

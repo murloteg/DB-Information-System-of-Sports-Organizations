@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 public class ChampionshipGeneralInfoDto {
+    @JsonProperty(value = "championship_id")
+    private long championshipId;
+
     @JsonProperty(value = "championship_name")
     private String championshipName;
 

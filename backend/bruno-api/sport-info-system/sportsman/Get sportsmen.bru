@@ -1,0 +1,16 @@
+meta {
+  name: Get sportsmen
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/sport/sportsman/sportsmen?page=0&size=30
+  body: none
+  auth: none
+}
+
+query {
+  page: 0
+  size: 30
+}

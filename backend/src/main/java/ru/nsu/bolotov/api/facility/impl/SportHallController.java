@@ -2,6 +2,7 @@ package ru.nsu.bolotov.api.facility.impl;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -10,6 +11,7 @@ import ru.nsu.bolotov.model.dto.facility.hall.SportHallInfoDto;
 import ru.nsu.bolotov.model.dto.facility.hall.SportHallUpdateDto;
 import ru.nsu.bolotov.service.facility.impl.SportHallService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -47,5 +49,13 @@ public class SportHallController {
         sportHallService.updateSportFacility(sportHallUpdateDto);
         return ResponseEntity.noContent()
                 .build();
+    }
+
+    @GetMapping(value = "/halls")
+    public ResponseEntity<List<SportHallInfoDto>> getHalls(@RequestParam int page, @RequestParam int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<SportHallInfoDto> sportHalls = sportHallService.getHalls(pageRequest);
+        return ResponseEntity.ok()
+                .body(sportHalls);
     }
 }

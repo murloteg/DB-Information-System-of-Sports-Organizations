@@ -2,6 +2,8 @@ package ru.nsu.bolotov.service.sport;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.sport.SportClubRepository;
@@ -10,6 +12,9 @@ import ru.nsu.bolotov.model.dto.sport.club.SportClubUpdateDto;
 import ru.nsu.bolotov.model.entity.sport.SportClub;
 import ru.nsu.bolotov.model.exception.sport.SportClubNotFoundException;
 import ru.nsu.bolotov.model.mapper.SportClubMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -52,5 +57,14 @@ public class SportClubService {
         } else {
             throw new SportClubNotFoundException("Клуб не найден");
         }
+    }
+
+    public List<SportClubDto> getSportClubs(Pageable pageable) {
+        Page<SportClub> sportClubs = sportClubRepository.findAll(pageable);
+        List<SportClubDto> sportClubDtos = new ArrayList<>();
+        for (SportClub sportClub : sportClubs) {
+            sportClubDtos.add(sportClubMapper.map(sportClub));
+        }
+        return sportClubDtos;
     }
 }

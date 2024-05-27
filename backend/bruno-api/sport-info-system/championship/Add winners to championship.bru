@@ -1,0 +1,19 @@
+meta {
+  name: Add winners to championship
+  type: http
+  seq: 7
+}
+
+patch {
+  url: {{baseUrl}}/{{apiVersion}}/championship/winners
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "championship_id" : 1,
+    "winners" : [1]
+  }
+  
+}
