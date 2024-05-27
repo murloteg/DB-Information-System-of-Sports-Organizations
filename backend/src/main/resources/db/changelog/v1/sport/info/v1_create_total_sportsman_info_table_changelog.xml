@@ -1,0 +1,45 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v1_create_total_sportsman_info_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="total_sportsman_info"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="total_sportsman_info">
+            <column name="id" type="bigint" autoIncrement="true" startWith="33">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sportsman_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_total_sportsman_info_sportsman"
+                             references="sportsman(sportsman_id)"/>
+            </column>
+            <column name="couch_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_total_sportsman_info_couch"
+                             references="couch(couch_id)"/>
+            </column>
+            <column name="sport_type_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_total_sportsman_info_sport_type"
+                             references="sport_type(sport_type_id)"/>
+            </column>
+            <column name="sport_rank_level" type="varchar(255)">
+                <constraints nullable="false"
+                             checkConstraint="CHECK (sport_rank_level IN ('THIRD_YOUTH_CATEGORY','SECOND_YOUTH_CATEGORY','FIRST_YOUTH_CATEGORY','THIRD_SPORTS_CATEGORY','SECOND_SPORTS_CATEGORY','FIRST_SPORTS_CATEGORY','CANDIDATE_FOR_THE_MASTER_OF_SPORTS','MASTER_OF_SPORTS'))"/>
+            </column>
+        </createTable>
+        <comment>Create total_sportsman_info table</comment>
+    </changeSet>
+
+    <changeSet id="v1_fill_total_sportsman_info_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="total_sportsman_info"/>
+            <tableIsEmpty tableName="total_sportsman_info"/>
+        </preConditions>
+        <loadData tableName="total_sportsman_info" file="db/data/total_sportsman_info.csv"/>
+        <comment>Fill table if it isn't empty</comment>
+    </changeSet>
+</databaseChangeLog>

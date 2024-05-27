@@ -20,7 +20,7 @@ import ru.nsu.bolotov.model.enumeration.Sex;
 @Table(name = "couch")
 public class Couch {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "couch_id")
     private long couchId;
 

@@ -1,0 +1,36 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="v1_create_championship_organizers_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="championship_organizers"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="championship_organizers">
+            <column name="organizer_id" type="bigint" autoIncrement="true" startWith="5">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="company_name" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="company_description" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <comment>Create championship_organizers table</comment>
+    </changeSet>
+    
+    <changeSet id="v1_fill_championship_organizers_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="championship_organizers"/>
+            <tableIsEmpty tableName="championship_organizers"/>
+        </preConditions>
+        <loadData tableName="championship_organizers" file="db/data/championship_organizers.csv"/>
+        <comment>Fill table if it isn't empty</comment>
+    </changeSet>
+    
+</databaseChangeLog>

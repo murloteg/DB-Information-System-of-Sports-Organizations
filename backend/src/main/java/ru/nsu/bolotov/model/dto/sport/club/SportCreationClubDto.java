@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SportClubDto {
+public class SportCreationClubDto {
     @JsonProperty(value = "club_name")
     @NotBlank
     private String clubName;

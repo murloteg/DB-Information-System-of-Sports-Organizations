@@ -1,0 +1,34 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="v1_create_sport_hall_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="sport_hall"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="sport_hall">
+            <column name="sport_facility_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_sport_facility_hall"
+                             references="sport_facility(sport_facility_id)"/>
+            </column>
+            <column name="number_of_seats" type="integer">
+                <constraints nullable="false"
+                             checkConstraint="CHECK ((number_of_seats &gt;= 1) and (number_of_seats &lt;= 300000))"/>
+            </column>
+        </createTable>
+        <comment>Create sport_hall table</comment>
+    </changeSet>
+
+    <changeSet id="v1_fill_sport_hall_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="sport_hall"/>
+            <tableIsEmpty tableName="sport_hall"/>
+        </preConditions>
+        <loadData tableName="sport_hall" file="db/data/sport_hall.csv"/>
+        <comment>Fill table if it isn't empty</comment>
+    </changeSet>
+</databaseChangeLog>
