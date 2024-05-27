@@ -1,0 +1,50 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    
+    <changeSet id="v1_create_championship_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="championship"/>
+            </not>
+            <tableExists tableName="sport_type"/>
+            <tableExists tableName="sport_facility"/>
+        </preConditions>
+
+        <createTable tableName="championship">
+            <column name="championship_id" type="bigint" autoIncrement="true" startWith="5">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="championship_name" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="start_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sport_type_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_championship_sport_type"
+                             references="sport_type(sport_type_id)"/>
+            </column>
+            <column name="sport_facility_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_championship_sport_facility"
+                             references="sport_facility(sport_facility_id)"/>
+            </column>
+
+        </createTable>
+        <comment>Create championship table</comment>
+    </changeSet>
+
+    <changeSet id="v1_fill_championship_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="championship"/>
+            <tableIsEmpty tableName="championship"/>
+        </preConditions>
+        <loadData tableName="championship" file="db/data/championship.csv"/>
+        <comment>Fill table if it isn't empty</comment>
+    </changeSet>
+
+</databaseChangeLog>

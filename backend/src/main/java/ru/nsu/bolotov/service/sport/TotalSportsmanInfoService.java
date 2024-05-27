@@ -9,23 +9,16 @@ import ru.nsu.bolotov.dao.sport.CouchRepository;
 import ru.nsu.bolotov.dao.sport.SportTypeRepository;
 import ru.nsu.bolotov.dao.sport.SportsmanRepository;
 import ru.nsu.bolotov.dao.sport.TotalSportsmanInfoRepository;
-import ru.nsu.bolotov.model.dto.sport.club.SportClubDto;
-import ru.nsu.bolotov.model.dto.sport.couch.CouchInfoDto;
-import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
 import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoCreationDto;
 import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoDto;
 import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoUpdateDto;
-import ru.nsu.bolotov.model.dto.sport.type.SportTypeInfoDto;
 import ru.nsu.bolotov.model.entity.sport.*;
 import ru.nsu.bolotov.model.enumeration.SportRankLevel;
 import ru.nsu.bolotov.model.exception.sport.CouchNotFoundException;
 import ru.nsu.bolotov.model.exception.sport.SportTypeNotFoundException;
 import ru.nsu.bolotov.model.exception.sport.SportsmanNotFoundException;
 import ru.nsu.bolotov.model.exception.sport.TotalSportsmanInfoNotFound;
-import ru.nsu.bolotov.model.mapper.CouchMapper;
-import ru.nsu.bolotov.model.mapper.SportClubMapper;
-import ru.nsu.bolotov.model.mapper.SportTypeMapper;
-import ru.nsu.bolotov.model.mapper.SportsmanMapper;
+import ru.nsu.bolotov.model.mapper.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +30,7 @@ public class TotalSportsmanInfoService {
     private final SportsmanRepository sportsmanRepository;
     private final SportTypeRepository sportTypeRepository;
     private final CouchRepository couchRepository;
-    private final SportsmanMapper sportsmanMapper;
-    private final SportTypeMapper sportTypeMapper;
-    private final CouchMapper couchMapper;
-    private final SportClubMapper sportClubMapper;
+    private final TotalSportsmanInfoDtoMapper totalSportsmanInfoDtoMapper;
 
     @Transactional
     public long createTotalSportsmanInfo(TotalSportsmanInfoCreationDto totalSportsmanInfoDto) {
@@ -60,23 +50,10 @@ public class TotalSportsmanInfoService {
         return savedTotalInfo.getTotalSportsmanInfoId();
     }
 
-    // TODO: add mapper for TotalSportsmanInfo
     public TotalSportsmanInfoDto getTotalSportsmanInfo(long totalSportsmanInfoId) {
         TotalSportsmanInfo totalSportsmanInfo = totalSportsmanInfoRepository.findTotalSportsmanInfoByTotalSportsmanInfoId(totalSportsmanInfoId)
                 .orElseThrow(() -> new TotalSportsmanInfoNotFound("Подробная информация о спортсмене не найдена"));
-        Sportsman sportsman = totalSportsmanInfo.getSportsman();
-        SportClub sportClub = sportsman.getSportClub();
-        SportClubDto sportClubDto = sportClubMapper.map(sportClub);
-        SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(sportsman);
-        sportsmanInfoDto.setSportClubDto(sportClubDto);
-        SportTypeInfoDto sportTypeInfoDto = sportTypeMapper.map(totalSportsmanInfo.getSportType());
-        CouchInfoDto couchInfoDto = couchMapper.map(totalSportsmanInfo.getCouch());
-        return new TotalSportsmanInfoDto(
-                sportsmanInfoDto,
-                sportTypeInfoDto,
-                couchInfoDto,
-                totalSportsmanInfo.getSportRankLevel().name()
-        );
+        return totalSportsmanInfoDtoMapper.apply(totalSportsmanInfo);
     }
 
     @Transactional
@@ -113,19 +90,7 @@ public class TotalSportsmanInfoService {
         Page<TotalSportsmanInfo> totalSportsmanInfos = totalSportsmanInfoRepository.findAll(pageable);
         List<TotalSportsmanInfoDto> totalSportsmanInfoDtos = new ArrayList<>();
         for (TotalSportsmanInfo totalSportsmanInfo : totalSportsmanInfos) {
-            Sportsman sportsman = totalSportsmanInfo.getSportsman();
-            SportClub sportClub = sportsman.getSportClub();
-            SportClubDto sportClubDto = sportClubMapper.map(sportClub);
-            SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(sportsman);
-            sportsmanInfoDto.setSportClubDto(sportClubDto);
-            SportTypeInfoDto sportTypeInfoDto = sportTypeMapper.map(totalSportsmanInfo.getSportType());
-            CouchInfoDto couchInfoDto = couchMapper.map(totalSportsmanInfo.getCouch());
-            totalSportsmanInfoDtos.add(new TotalSportsmanInfoDto(
-                    sportsmanInfoDto,
-                    sportTypeInfoDto,
-                    couchInfoDto,
-                    totalSportsmanInfo.getSportRankLevel().name()
-            ));
+            totalSportsmanInfoDtos.add(totalSportsmanInfoDtoMapper.apply(totalSportsmanInfo));
         }
         return totalSportsmanInfoDtos;
     }

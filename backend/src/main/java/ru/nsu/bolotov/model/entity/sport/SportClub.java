@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = "sport_club")
 public class SportClub {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "club_id")
     private long clubId;
 

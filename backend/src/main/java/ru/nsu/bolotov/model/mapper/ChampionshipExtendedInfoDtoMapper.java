@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import ru.nsu.bolotov.model.dto.championship.ChampionshipExtendedInfoDto;
 import ru.nsu.bolotov.model.dto.championship.ChampionshipGeneralInfoDto;
 import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerInfoDto;
-import ru.nsu.bolotov.model.dto.sport.club.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubInfoDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportCreationClubDto;
 import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
 import ru.nsu.bolotov.model.entity.championship.Championship;
 import ru.nsu.bolotov.model.entity.championship.ChampionshipOrganizer;
@@ -17,7 +18,7 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
-public class ChampionshipExtendedInfoMapper implements Function<Championship, ChampionshipExtendedInfoDto> {
+public class ChampionshipExtendedInfoDtoMapper implements Function<Championship, ChampionshipExtendedInfoDto> {
     private final ChampionshipMapper championshipMapper;
     private final ChampionshipOrganizersMapper championshipOrganizersMapper;
     private final SportsmanMapper sportsmanMapper;
@@ -37,7 +38,7 @@ public class ChampionshipExtendedInfoMapper implements Function<Championship, Ch
         List<SportsmanInfoDto> participantInfoDtos = new ArrayList<>();
         for (Sportsman participant : participants) {
             SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(participant);
-            SportClubDto sportClubDto = sportClubMapper.map(participant.getSportClub());
+            SportClubInfoDto sportClubDto = sportClubMapper.map(participant.getSportClub());
             sportsmanInfoDto.setSportClubDto(sportClubDto);
             participantInfoDtos.add(sportsmanInfoDto);
         }
@@ -46,7 +47,7 @@ public class ChampionshipExtendedInfoMapper implements Function<Championship, Ch
         List<SportsmanInfoDto> winnerInfoDtos = new ArrayList<>();
         for (Sportsman winner : winners) {
             SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(winner);
-            SportClubDto sportClubDto = sportClubMapper.map(winner.getSportClub());
+            SportClubInfoDto sportClubDto = sportClubMapper.map(winner.getSportClub());
             sportsmanInfoDto.setSportClubDto(sportClubDto);
             winnerInfoDtos.add(sportsmanInfoDto);
         }

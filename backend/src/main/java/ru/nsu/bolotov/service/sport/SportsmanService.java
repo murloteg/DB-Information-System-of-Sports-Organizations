@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.sport.SportClubRepository;
 import ru.nsu.bolotov.dao.sport.SportsmanRepository;
-import ru.nsu.bolotov.model.dto.sport.club.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubInfoDto;
 import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanCreationDto;
 import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
 import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanUpdateDto;
@@ -43,7 +43,7 @@ public class SportsmanService {
         Sportsman sportsman = sportsmanRepository.findSportsmanBySportsmanId(sportsmanId)
                 .orElseThrow(() -> new SportsmanNotFoundException("Спортсмен не найден"));
         SportClub sportClub = sportsman.getSportClub();
-        SportClubDto sportClubDto = sportClubMapper.map(sportClub);
+        SportClubInfoDto sportClubDto = sportClubMapper.map(sportClub);
         SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(sportsman);
         sportsmanInfoDto.setSportClubDto(sportClubDto);
         return sportsmanInfoDto;
@@ -82,7 +82,7 @@ public class SportsmanService {
         List<SportsmanInfoDto> sportsmanInfoDtos = new ArrayList<>();
         for (Sportsman sportsman : sportsmen) {
             SportClub sportClub = sportsman.getSportClub();
-            SportClubDto sportClubDto = sportClubMapper.map(sportClub);
+            SportClubInfoDto sportClubDto = sportClubMapper.map(sportClub);
             SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(sportsman);
             sportsmanInfoDto.setSportClubDto(sportClubDto);
             sportsmanInfoDtos.add(sportsmanInfoDto);

@@ -1,0 +1,36 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v1_create_sport_club" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="sport_club"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="sport_club">
+            <column name="club_id" type="bigint" autoIncrement="true" startWith="9">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="club_name" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_of_foundation" type="date">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <comment>Create sport_club table</comment>
+    </changeSet>
+
+    <changeSet id="v1_fill_sport_club_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="sport_club"/>
+            <tableIsEmpty tableName="sport_club"/>
+        </preConditions>
+        <loadData tableName="sport_club" file="db/data/sport_club.csv"/>
+        <comment>Fill table if it isn't empty</comment>
+    </changeSet>
+
+</databaseChangeLog>

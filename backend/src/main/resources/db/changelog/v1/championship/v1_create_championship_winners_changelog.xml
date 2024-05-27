@@ -1,0 +1,27 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v1_create_championship_winners_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="championship_winners"/>
+            </not>
+            <tableExists tableName="championship"/>
+            <tableExists tableName="sportsman"/>
+        </preConditions>
+
+        <createTable tableName="championship_winners">
+            <column name="championship_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_championship_winners_championship"
+                             references="championship(championship_id)"/>
+            </column>
+            <column name="sportsman_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_championship_winners_sportsman"
+                             references="sportsman(sportsman_id)"/>
+            </column>
+        </createTable>
+        <comment>Create championship_organizers table</comment>
+    </changeSet>
+</databaseChangeLog>

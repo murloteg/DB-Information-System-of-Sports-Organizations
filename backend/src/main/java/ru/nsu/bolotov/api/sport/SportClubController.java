@@ -7,7 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.sport.club.SportClubDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubInfoDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportCreationClubDto;
 import ru.nsu.bolotov.model.dto.sport.club.SportClubUpdateDto;
 import ru.nsu.bolotov.service.sport.SportClubService;
 
@@ -21,9 +22,9 @@ public class SportClubController {
     private final SportClubService sportClubService;
 
     @PostMapping
-    public ResponseEntity<?> createSportClub(@RequestBody @Valid SportClubDto sportClubDto,
+    public ResponseEntity<?> createSportClub(@RequestBody @Valid SportCreationClubDto sportCreationClubDto,
                                              UriComponentsBuilder uriComponentsBuilder) {
-        long clubId = sportClubService.createSportClub(sportClubDto);
+        long clubId = sportClubService.createSportClub(sportCreationClubDto);
         return ResponseEntity.created(uriComponentsBuilder
                         .path("api/v1/sport/club/{clubId}")
                         .build(Map.of("clubId", clubId)))
@@ -31,8 +32,8 @@ public class SportClubController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<SportClubDto> getSportClubInfo(@PathVariable(value = "id") Long clubId) {
-        SportClubDto sportClubInfo = sportClubService.getSportClubInfo(clubId);
+    public ResponseEntity<SportClubInfoDto> getSportClubInfo(@PathVariable(value = "id") Long clubId) {
+        SportClubInfoDto sportClubInfo = sportClubService.getSportClubInfo(clubId);
         return ResponseEntity.ok()
                 .body(sportClubInfo);
     }
@@ -52,9 +53,9 @@ public class SportClubController {
     }
 
     @GetMapping(value = "/clubs")
-    public ResponseEntity<List<SportClubDto>> getSportClubs(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<List<SportClubInfoDto>> getSportClubs(@RequestParam int page, @RequestParam int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        List<SportClubDto> sportClubs = sportClubService.getSportClubs(pageRequest);
+        List<SportClubInfoDto> sportClubs = sportClubService.getSportClubs(pageRequest);
         return ResponseEntity.ok()
                 .body(sportClubs);
     }

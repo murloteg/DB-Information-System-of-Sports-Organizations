@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.Length;
 @Table(name = "sport_type")
 public class SportType {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sport_type_id")
     private long sportTypeId;
 

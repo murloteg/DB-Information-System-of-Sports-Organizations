@@ -12,6 +12,9 @@ import ru.nsu.bolotov.model.dto.sport.type.SportTypeInfoDto;
 @Setter
 @AllArgsConstructor
 public class TotalSportsmanInfoDto {
+    @JsonProperty(value = "total_sportsman_info_id")
+    private long totalSportsmanInfoId;
+
     @JsonProperty(value = "sportsman_info")
     private SportsmanInfoDto sportsmanInfoDto;
 

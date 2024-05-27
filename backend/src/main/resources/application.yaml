@@ -4,9 +4,10 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
   liquibase:
-    enabled: false
+    enabled: true
+    change-log: db/changelog/main_changelog.xml
   docker:
     compose:
       file: backend/deploy/docker-compose.yaml

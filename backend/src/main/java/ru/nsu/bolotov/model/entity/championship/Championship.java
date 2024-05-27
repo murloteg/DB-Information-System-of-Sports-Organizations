@@ -26,7 +26,7 @@ import java.util.List;
 @Table(name = "championship")
 public class Championship {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "championship_id")
     private long championshipId;
 

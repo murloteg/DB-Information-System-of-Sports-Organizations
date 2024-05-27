@@ -1,0 +1,36 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v1_create_sport_facility_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="sport_facility"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="sport_facility">
+            <column name="sport_facility_id" type="bigint" autoIncrement="true" startWith="8">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="facility_name" type="varchar(180)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="facility_type" type="varchar(255)">
+                <constraints nullable="false" checkConstraint="CHECK (facility_type IN ('SPORT_HALL','SPORT_COURT'))"/>
+            </column>
+        </createTable>
+        <comment>Create sport_facility table</comment>
+    </changeSet>
+
+    <changeSet id="v1_fill_sport_facility_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="sport_facility"/>
+            <tableIsEmpty tableName="sport_facility"/>
+        </preConditions>
+        <loadData tableName="sport_facility" file="db/data/sport_facility.csv"/>
+        <comment>Fill table if it isn't empty</comment>
+    </changeSet>
+
+</databaseChangeLog>

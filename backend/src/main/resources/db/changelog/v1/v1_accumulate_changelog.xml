@@ -1,0 +1,21 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="sport/club/v1_create_sport_club_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="sport/couch/v1_create_couch_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="sport/type/v1_create_sport_type_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="sport/sportsman/v1_create_sportsman_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="sport/info/v1_create_total_sportsman_info_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="facility/v1_create_sport_facility_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="facility/hall/v1_create_sport_hall_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="facility/court/v1_create_sport_court_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="championship/organizers/v1_create_championship_organizers_table_changelog.xml"
+             relativeToChangelogFile="true"/>
+    <include file="championship/v1_create_championship_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="championship/organizers/v1_create_championship_organizers_championships_table_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="championship/v1_create_championship_participants_changelog.xml" relativeToChangelogFile="true"/>
+    <include file="championship/v1_create_championship_winners_changelog.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

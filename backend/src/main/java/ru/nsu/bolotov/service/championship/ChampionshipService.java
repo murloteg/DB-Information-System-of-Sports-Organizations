@@ -25,7 +25,7 @@ import ru.nsu.bolotov.model.exception.championship.IllegalAttemptToAddSportsmanT
 import ru.nsu.bolotov.model.exception.facility.SportFacilityNotFoundException;
 import ru.nsu.bolotov.model.exception.sport.SportTypeNotFoundException;
 import ru.nsu.bolotov.model.exception.sport.SportsmanNotFoundException;
-import ru.nsu.bolotov.model.mapper.ChampionshipExtendedInfoMapper;
+import ru.nsu.bolotov.model.mapper.ChampionshipExtendedInfoDtoMapper;
 import ru.nsu.bolotov.model.mapper.ChampionshipMapper;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ChampionshipService {
     private final SportsmanRepository sportsmanRepository;
     private final TotalSportsmanInfoRepository totalSportsmanInfoRepository;
     private final ChampionshipMapper championshipMapper;
-    private final ChampionshipExtendedInfoMapper championshipExtendedInfoMapper;
+    private final ChampionshipExtendedInfoDtoMapper championshipExtendedInfoDtoMapper;
 
     @Transactional
     public long createChampionship(ChampionshipCreationDto championshipCreationDto) {
@@ -77,7 +77,7 @@ public class ChampionshipService {
     public ChampionshipExtendedInfoDto getChampionshipInfo(long championshipId) {
         Championship championship = championshipRepository.findChampionshipByChampionshipId(championshipId)
                 .orElseThrow(() -> new ChampionshipNotFoundException("Соревнование не было найдено"));
-        return championshipExtendedInfoMapper.apply(championship);
+        return championshipExtendedInfoDtoMapper.apply(championship);
     }
 
     @Transactional
@@ -121,7 +121,7 @@ public class ChampionshipService {
         Page<Championship> championships = championshipRepository.findAll(pageable);
         List<ChampionshipExtendedInfoDto> championshipExtendedInfoDtos = new ArrayList<>();
         for (Championship championship : championships) {
-            championshipExtendedInfoDtos.add(championshipExtendedInfoMapper.apply(championship));
+            championshipExtendedInfoDtos.add(championshipExtendedInfoDtoMapper.apply(championship));
         }
         return championshipExtendedInfoDtos;
     }

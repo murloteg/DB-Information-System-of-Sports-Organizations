@@ -1,0 +1,41 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="v1_create_couch_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="couch"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="couch">
+            <column name="couch_id" type="bigint" autoIncrement="true" startWith="15">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="integer">
+                <constraints nullable="false" checkConstraint="CHECK ((age &lt;= 105) AND (age &gt;= 5))"/>
+            </column>
+            <column name="sex" type="varchar(255)">
+                <constraints nullable="false" checkConstraint="CHECK (sex IN ('MALE','FEMALE'))"/>
+            </column>
+        </createTable>
+        <comment>Create couch table</comment>
+    </changeSet>
+
+    <changeSet id="v1_fill_couch_table" author="Kirill Bolotov">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="couch"/>
+            <tableIsEmpty tableName="couch"/>
+        </preConditions>
+        <loadData tableName="couch" file="db/data/couch.csv"/>
+        <comment>Fill table if it isn't empty</comment>
+    </changeSet>
+</databaseChangeLog>
