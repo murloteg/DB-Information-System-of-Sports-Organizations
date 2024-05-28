@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerCreationDto;
 import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerInfoDto;
+import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerStatisticInfoDto;
 import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerUpdateDto;
+import ru.nsu.bolotov.model.dto.request.RequestByPeriodDto;
 import ru.nsu.bolotov.service.championship.ChampionshipOrganizersService;
 
 import java.util.List;
@@ -58,5 +60,14 @@ public class ChampionshipOrganizersController {
         List<ChampionshipOrganizerInfoDto> organizers = championshipOrganizersService.getOrganizers(pageRequest);
         return ResponseEntity.ok()
                 .body(organizers);
+    }
+
+    @GetMapping(value = "/organizers/statistic-by-period")
+    public ResponseEntity<List<ChampionshipOrganizerStatisticInfoDto>> getOrganizersStatisticsByPeriod(
+            @RequestBody @Valid RequestByPeriodDto requestByPeriodDto
+    ) {
+        List<ChampionshipOrganizerStatisticInfoDto> organizersStatistics = championshipOrganizersService.getOrganizersStatisticsByPeriod(requestByPeriodDto);
+        return ResponseEntity.ok()
+                .body(organizersStatistics);
     }
 }

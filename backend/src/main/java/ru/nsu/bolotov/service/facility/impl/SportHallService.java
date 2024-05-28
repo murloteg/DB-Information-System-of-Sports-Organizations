@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.facility.SportHallRepository;
+import ru.nsu.bolotov.model.dto.request.RequestToSportHallDto;
 import ru.nsu.bolotov.model.dto.facility.hall.SportHallCreationDto;
 import ru.nsu.bolotov.model.dto.facility.hall.SportHallInfoDto;
 import ru.nsu.bolotov.model.dto.facility.hall.SportHallUpdateDto;
@@ -64,6 +65,18 @@ public class SportHallService {
 
     public List<SportHallInfoDto> getHalls(Pageable pageable) {
         Page<SportHall> sportHalls = sportHallRepository.findAll(pageable);
+        List<SportHallInfoDto> sportHallInfoDtos = new ArrayList<>();
+        for (SportHall sportHall : sportHalls) {
+            sportHallInfoDtos.add(sportHallMapper.map(sportHall));
+        }
+        return sportHallInfoDtos;
+    }
+
+    public List<SportHallInfoDto> getHallsByProperty(RequestToSportHallDto requestToSportHall) {
+        List<SportHall> sportHalls = sportHallRepository.getAllByPropertyOrByFacilityType(
+                requestToSportHall.getNumberOfSeats(),
+                requestToSportHall.getSportFacilityType()
+        );
         List<SportHallInfoDto> sportHallInfoDtos = new ArrayList<>();
         for (SportHall sportHall : sportHalls) {
             sportHallInfoDtos.add(sportHallMapper.map(sportHall));

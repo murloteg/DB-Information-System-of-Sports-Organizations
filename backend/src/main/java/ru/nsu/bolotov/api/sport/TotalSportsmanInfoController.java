@@ -7,9 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoCreationDto;
-import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoDto;
-import ru.nsu.bolotov.model.dto.sport.totalinfo.TotalSportsmanInfoUpdateDto;
+import ru.nsu.bolotov.model.dto.request.RequestByCouchOrRankSportsmanDto;
+import ru.nsu.bolotov.model.dto.request.RequestByTypeOrRankSportsmanDto;
+import ru.nsu.bolotov.model.dto.sport.couch.CouchInfoDto;
+import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanManySportTypesOverviewDto;
+import ru.nsu.bolotov.model.dto.sport.totalinfo.*;
 import ru.nsu.bolotov.service.sport.TotalSportsmanInfoService;
 
 import java.util.List;
@@ -58,5 +60,46 @@ public class TotalSportsmanInfoController {
         List<TotalSportsmanInfoDto> totalSportsmanInfos = totalSportsmanInfoService.getTotalSportsmanInfos(pageRequest);
         return ResponseEntity.ok()
                 .body(totalSportsmanInfos);
+    }
+
+    @GetMapping(value = "/by-type-or-rank")
+    public ResponseEntity<List<TotalSportsmanInfoDto>> getSportsmenBySportTypeOrSportRank(
+            @RequestBody @Valid
+            RequestByTypeOrRankSportsmanDto requestByTypeOrRankSportsman
+    ) {
+        List<TotalSportsmanInfoDto> sportsmanInfos = totalSportsmanInfoService.getSportsmanInfosBySportTypeOrSportRank(requestByTypeOrRankSportsman);
+        return ResponseEntity.ok()
+                .body(sportsmanInfos);
+    }
+
+    @GetMapping(value = "/by-couch-or-rank")
+    public ResponseEntity<List<TotalSportsmanInfoDto>> getSportsmenByCouchOrSportRank(
+            @RequestBody @Valid
+            RequestByCouchOrRankSportsmanDto requestByCouchOrRankSportsman
+    ) {
+        List<TotalSportsmanInfoDto> sportsmanInfos = totalSportsmanInfoService.getSportsmanInfosByCouchOrSportRank(requestByCouchOrRankSportsman);
+        return ResponseEntity.ok()
+                .body(sportsmanInfos);
+    }
+
+    @GetMapping(value = "/many-sport-types")
+    public ResponseEntity<List<SportsmanManySportTypesOverviewDto>> getSportsmenWithManySportTypes() {
+        List<SportsmanManySportTypesOverviewDto> sportsmanInfos = totalSportsmanInfoService.getSportsmenWithManySportTypes();
+        return ResponseEntity.ok()
+                .body(sportsmanInfos);
+    }
+
+    @GetMapping(value = "/couches/by-sportsman/{id}")
+    public ResponseEntity<List<CouchesOverviewDto>> getCouchesBySportsman(@PathVariable(name = "id") long sportsmanId) {
+        List<CouchesOverviewDto> couchesBySportsman = totalSportsmanInfoService.getCouchesBySportsman(sportsmanId);
+        return ResponseEntity.ok()
+                .body(couchesBySportsman);
+    }
+
+    @GetMapping(value = "/couches/by-sport-type/{id}")
+    public ResponseEntity<List<CouchInfoDto>> getCouchesBySportType(@PathVariable(name = "id") long sportTypeId) {
+        List<CouchInfoDto> couches = totalSportsmanInfoService.getCouchesBySportType(sportTypeId);
+        return ResponseEntity.ok()
+                .body(couches);
     }
 }

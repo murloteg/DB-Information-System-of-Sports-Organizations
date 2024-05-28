@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.nsu.bolotov.model.entity.facility.SportCourt;
 import ru.nsu.bolotov.model.enumeration.SportFacilityType;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,7 @@ public interface SportCourtRepository extends JpaRepository<SportCourt, Long> {
     @Modifying
     @Query(value = "update SportCourt sc set sc.facilityName = ?1, sc.facilityType = ?2, sc.typeOfCoverage = ?3 where sc.facilityId = ?4")
     void updateByFacilityId(String facilityName, SportFacilityType facilityType, String typeOfCoverage, long facilityId);
+
+    @Query(value = "select sc from SportCourt sc where sc.typeOfCoverage like ?1 or sc.facilityType = ?2")
+    List<SportCourt> getAllByPropertyOrByFacilityType(String typeOfCoverage, SportFacilityType sportFacilityType);
 }

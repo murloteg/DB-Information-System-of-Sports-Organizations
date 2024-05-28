@@ -1,0 +1,19 @@
+meta {
+  name: Get sport hall by property
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/facility/hall/by-property
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "number_of_seats" : 1000,
+    "facility_type" : "SPORT_HALL"
+  }
+  
+}

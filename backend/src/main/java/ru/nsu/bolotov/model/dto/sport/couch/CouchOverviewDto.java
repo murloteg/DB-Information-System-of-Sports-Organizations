@@ -9,7 +9,7 @@ import ru.nsu.bolotov.model.enumeration.Sex;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CouchInfoDto {
+public class CouchOverviewDto {
     @JsonProperty(value = "couch_id")
     private long couchId;
 
@@ -22,4 +22,7 @@ public class CouchInfoDto {
     private int age;
 
     private Sex sex;
+
+    @JsonProperty(value = "sport_type_id")
+    private long sportTypeId;
 }

@@ -1,0 +1,11 @@
+meta {
+  name: Get couches by sport type
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/sport/sportsman/info/couches/by-sport-type/{{sportTypeId}}
+  body: none
+  auth: none
+}
