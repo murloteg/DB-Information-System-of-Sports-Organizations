@@ -6,7 +6,6 @@ import ru.nsu.bolotov.model.dto.championship.ChampionshipExtendedInfoDto;
 import ru.nsu.bolotov.model.dto.championship.ChampionshipGeneralInfoDto;
 import ru.nsu.bolotov.model.dto.championship.organizer.ChampionshipOrganizerInfoDto;
 import ru.nsu.bolotov.model.dto.sport.club.SportClubInfoDto;
-import ru.nsu.bolotov.model.dto.sport.club.SportCreationClubDto;
 import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
 import ru.nsu.bolotov.model.entity.championship.Championship;
 import ru.nsu.bolotov.model.entity.championship.ChampionshipOrganizer;

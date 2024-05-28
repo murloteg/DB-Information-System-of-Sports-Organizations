@@ -8,6 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.nsu.bolotov.model.dto.championship.*;
+import ru.nsu.bolotov.model.dto.facility.SportFacilityOverviewChampionshipDto;
+import ru.nsu.bolotov.model.dto.request.RequestByFacilityOrSportTypeChampionshipDto;
+import ru.nsu.bolotov.model.dto.request.RequestByPeriodDto;
+import ru.nsu.bolotov.model.dto.request.RequestByPeriodOrOrganizerChampionshipDto;
+import ru.nsu.bolotov.model.dto.sport.club.SportClubStatisticInfoDto;
+import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
 import ru.nsu.bolotov.service.championship.ChampionshipService;
 
 import java.util.List;
@@ -70,5 +76,55 @@ public class ChampionshipController {
         championshipService.addWinnersToChampionship(championshipWinnersUpdateDto);
         return ResponseEntity.noContent()
                 .build();
+    }
+
+    @GetMapping(value = "/by-period-or-organizer")
+    public ResponseEntity<List<ChampionshipExtendedInfoDto>> getChampionshipsByPeriodOrOrganizer(
+            @RequestBody @Valid RequestByPeriodOrOrganizerChampionshipDto requestByPeriodOrOrganizerChampionship
+    ) {
+        List<ChampionshipExtendedInfoDto> championships = championshipService.getChampionshipsByPeriodOrOrganizer(requestByPeriodOrOrganizerChampionship);
+        return ResponseEntity.ok()
+                .body(championships);
+    }
+
+    @GetMapping(value = "/winners/{id}")
+    public ResponseEntity<ChampionshipExtendedInfoDto> getChampionshipWinners(@PathVariable(name = "id") long championshipId) {
+        ChampionshipExtendedInfoDto championshipInfo = championshipService.getChampionshipInfo(championshipId);
+        return ResponseEntity.ok()
+                .body(championshipInfo);
+    }
+
+    @GetMapping(value = "/by-facility-or-type")
+    public ResponseEntity<List<ChampionshipExtendedInfoDto>> getChampionshipsByFacilityOrSportType(
+            @RequestBody @Valid RequestByFacilityOrSportTypeChampionshipDto requestByFacilityOrSportTypeChampionship
+    ) {
+        List<ChampionshipExtendedInfoDto> championships = championshipService.getChampionshipsByFacilityOrSportType(requestByFacilityOrSportTypeChampionship);
+        return ResponseEntity.ok()
+                .body(championships);
+    }
+
+    @GetMapping(value = "/sport-clubs-by-period")
+    public ResponseEntity<List<SportClubStatisticInfoDto>> getSportClubsByPeriod(
+            @RequestBody @Valid RequestByPeriodDto requestByPeriodDto
+    ) {
+        List<SportClubStatisticInfoDto> sportClubs = championshipService.getSportClubsByPeriod(requestByPeriodDto);
+        return ResponseEntity.ok()
+                .body(sportClubs);
+    }
+
+    @GetMapping(value = "/inactive-sportsmen")
+    public ResponseEntity<List<SportsmanInfoDto>> getInactiveSportsmenByPeriod(
+            @RequestBody @Valid RequestByPeriodDto requestByPeriodDto
+    ) {
+        List<SportsmanInfoDto> inactiveSportsmen = championshipService.getInactiveSportsmenByPeriod(requestByPeriodDto);
+        return ResponseEntity.ok()
+                .body(inactiveSportsmen);
+    }
+    
+    @GetMapping(value = "/facilities-by-period")
+    public ResponseEntity<List<SportFacilityOverviewChampionshipDto>> getSportFacilitiesByPeriod(@RequestBody @Valid RequestByPeriodDto requestByPeriodDto) {
+        List<SportFacilityOverviewChampionshipDto> facilities = championshipService.getSportFacilitiesByPeriod(requestByPeriodDto);
+        return ResponseEntity.ok()
+                .body(facilities);
     }
 }

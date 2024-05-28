@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nsu.bolotov.dao.facility.SportCourtRepository;
+import ru.nsu.bolotov.model.dto.request.RequestToSportCourtDto;
 import ru.nsu.bolotov.model.dto.facility.court.SportCourtCreationDto;
 import ru.nsu.bolotov.model.dto.facility.court.SportCourtInfoDto;
 import ru.nsu.bolotov.model.dto.facility.court.SportCourtUpdateDto;
@@ -65,6 +66,18 @@ public class SportCourtService {
 
     public List<SportCourtInfoDto> getCourts(Pageable pageable) {
         Page<SportCourt> sportCourts = sportCourtRepository.findAll(pageable);
+        List<SportCourtInfoDto> sportCourtInfoDtos = new ArrayList<>();
+        for (SportCourt sportCourt : sportCourts) {
+            sportCourtInfoDtos.add(sportCourtMapper.map(sportCourt));
+        }
+        return sportCourtInfoDtos;
+    }
+
+    public List<SportCourtInfoDto> getCourtsByProperty(RequestToSportCourtDto requestToSportCourt) {
+        List<SportCourt> sportCourts = sportCourtRepository.getAllByPropertyOrByFacilityType(
+                requestToSportCourt.getTypeOfCoverage(),
+                requestToSportCourt.getSportFacilityType()
+        );
         List<SportCourtInfoDto> sportCourtInfoDtos = new ArrayList<>();
         for (SportCourt sportCourt : sportCourts) {
             sportCourtInfoDtos.add(sportCourtMapper.map(sportCourt));

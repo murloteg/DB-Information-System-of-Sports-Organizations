@@ -1,0 +1,19 @@
+meta {
+  name: Get incative sportsmen by period
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/inactive-sportsmen
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "start_date" : "2021-09-10",
+    "end_date" : "2021-09-20"
+  }
+  
+}

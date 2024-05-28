@@ -1,0 +1,19 @@
+meta {
+  name: Get sport facilities by period
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/facilities-by-period
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "start_date" : "2000-09-10",
+    "end_date" : "2025-09-20"
+  }
+  
+}

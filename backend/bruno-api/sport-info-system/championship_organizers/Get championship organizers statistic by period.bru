@@ -1,0 +1,19 @@
+meta {
+  name: Get championship organizers statistic by period
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/organizer/organizers/statistic-by-period
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "start_date" : "2024-03-14",
+    "end_date" : "2025-03-10"
+  }
+  
+}

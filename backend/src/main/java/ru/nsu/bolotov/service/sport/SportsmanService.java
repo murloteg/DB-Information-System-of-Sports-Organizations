@@ -5,17 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.nsu.bolotov.dao.sport.SportClubRepository;
-import ru.nsu.bolotov.dao.sport.SportsmanRepository;
-import ru.nsu.bolotov.model.dto.sport.club.SportClubInfoDto;
-import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanCreationDto;
-import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
-import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanUpdateDto;
-import ru.nsu.bolotov.model.entity.sport.SportClub;
-import ru.nsu.bolotov.model.entity.sport.Sportsman;
+import ru.nsu.bolotov.dao.sport.*;
+import ru.nsu.bolotov.model.dto.sport.sportsman.*;
+import ru.nsu.bolotov.model.entity.sport.*;
 import ru.nsu.bolotov.model.exception.sport.SportClubNotFoundException;
 import ru.nsu.bolotov.model.exception.sport.SportsmanNotFoundException;
 import ru.nsu.bolotov.model.mapper.SportClubMapper;
+import ru.nsu.bolotov.model.mapper.SportsmanInfoDtoMapper;
 import ru.nsu.bolotov.model.mapper.SportsmanMapper;
 
 import java.util.ArrayList;
@@ -28,6 +24,7 @@ public class SportsmanService {
     private final SportClubRepository sportClubRepository;
     private final SportsmanMapper sportsmanMapper;
     private final SportClubMapper sportClubMapper;
+    private final SportsmanInfoDtoMapper sportsmanInfoDtoMapper;
 
     @Transactional
     public long createSportsman(SportsmanCreationDto sportsmanDto) {
@@ -42,11 +39,7 @@ public class SportsmanService {
     public SportsmanInfoDto getSportsmanInfo(long sportsmanId) {
         Sportsman sportsman = sportsmanRepository.findSportsmanBySportsmanId(sportsmanId)
                 .orElseThrow(() -> new SportsmanNotFoundException("Спортсмен не найден"));
-        SportClub sportClub = sportsman.getSportClub();
-        SportClubInfoDto sportClubDto = sportClubMapper.map(sportClub);
-        SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(sportsman);
-        sportsmanInfoDto.setSportClubDto(sportClubDto);
-        return sportsmanInfoDto;
+        return sportsmanInfoDtoMapper.apply(sportsman);
     }
 
     @Transactional
@@ -81,11 +74,7 @@ public class SportsmanService {
         Page<Sportsman> sportsmen = sportsmanRepository.findAll(pageable);
         List<SportsmanInfoDto> sportsmanInfoDtos = new ArrayList<>();
         for (Sportsman sportsman : sportsmen) {
-            SportClub sportClub = sportsman.getSportClub();
-            SportClubInfoDto sportClubDto = sportClubMapper.map(sportClub);
-            SportsmanInfoDto sportsmanInfoDto = sportsmanMapper.map(sportsman);
-            sportsmanInfoDto.setSportClubDto(sportClubDto);
-            sportsmanInfoDtos.add(sportsmanInfoDto);
+            sportsmanInfoDtos.add(sportsmanInfoDtoMapper.apply(sportsman));
         }
         return sportsmanInfoDtos;
     }

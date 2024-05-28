@@ -1,0 +1,19 @@
+meta {
+  name: Get sportsmen by couch or sport rank
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/sport/sportsman/info/by-couch-or-rank
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "couch_id" : 4,
+    "sport_rank_level" : "MASTER_OF_SPORTS"
+  }
+  
+}

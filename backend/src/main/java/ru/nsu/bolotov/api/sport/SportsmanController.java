@@ -7,9 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanCreationDto;
-import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanInfoDto;
-import ru.nsu.bolotov.model.dto.sport.sportsman.SportsmanUpdateDto;
+import ru.nsu.bolotov.model.dto.sport.sportsman.*;
 import ru.nsu.bolotov.service.sport.SportsmanService;
 
 import java.util.List;

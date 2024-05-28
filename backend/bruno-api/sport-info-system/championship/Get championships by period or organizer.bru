@@ -1,0 +1,20 @@
+meta {
+  name: Get championships by period or organizer
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/by-period-or-organizer
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "start_date" : "2021-09-10",
+    "end_date" : "2021-09-20",
+    "organizer_id" : 2
+  }
+  
+}

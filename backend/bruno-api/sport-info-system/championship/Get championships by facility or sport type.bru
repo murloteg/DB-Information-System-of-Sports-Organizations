@@ -1,0 +1,19 @@
+meta {
+  name: Get championships by facility or sport type
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/championship/by-facility-or-type
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sport_facility_id" : 1,
+    "sport_type_id" : 1
+  }
+  
+}

@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.nsu.bolotov.model.dto.request.RequestToSportCourtDto;
 import ru.nsu.bolotov.model.dto.facility.court.SportCourtCreationDto;
 import ru.nsu.bolotov.model.dto.facility.court.SportCourtInfoDto;
 import ru.nsu.bolotov.model.dto.facility.court.SportCourtUpdateDto;
@@ -55,6 +56,13 @@ public class SportCourtController {
     public ResponseEntity<List<SportCourtInfoDto>> getCourts(@RequestParam int page, @RequestParam int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         List<SportCourtInfoDto> courts = sportCourtService.getCourts(pageRequest);
+        return ResponseEntity.ok()
+                .body(courts);
+    }
+
+    @GetMapping(value = "/by-property")
+    public ResponseEntity<List<SportCourtInfoDto>> getCourtsByProperty(@RequestBody @Valid RequestToSportCourtDto requestToSportCourt) {
+        List<SportCourtInfoDto> courts = sportCourtService.getCourtsByProperty(requestToSportCourt);
         return ResponseEntity.ok()
                 .body(courts);
     }

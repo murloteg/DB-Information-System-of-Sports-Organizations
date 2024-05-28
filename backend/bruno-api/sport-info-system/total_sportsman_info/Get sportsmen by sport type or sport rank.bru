@@ -1,0 +1,19 @@
+meta {
+  name: Get sportsmen by sport type or sport rank
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/sport/sportsman/info/by-type-or-rank
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sport_type_id" : 6,
+    "sport_rank_level" : "FIRST_SPORTS_CATEGORY"
+  }
+  
+}

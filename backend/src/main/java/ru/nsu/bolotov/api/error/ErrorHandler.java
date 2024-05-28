@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 @RequiredArgsConstructor
 public class ErrorHandler {
+    // TODO: handle not found case (404)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDto> handleInternalServerError() {
         return ResponseEntity.internalServerError()

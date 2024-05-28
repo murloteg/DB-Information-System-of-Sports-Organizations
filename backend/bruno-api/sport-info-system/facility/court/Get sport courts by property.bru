@@ -1,0 +1,19 @@
+meta {
+  name: Get sport courts by property
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/{{apiVersion}}/facility/court/by-property
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "type_of_coverage" : "Мягкое покрытие",
+    "facility_type" : "SPORT_COURT"
+  }
+  
+}
